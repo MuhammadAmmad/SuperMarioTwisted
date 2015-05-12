@@ -7,5 +7,8 @@ public class QuestionBlock extends Block
 {
     private int item; // 0 for coin, 1 for fireflower, 2 for iceflower
 
-
+    public QuestionBlock(float x, float y)
+    {
+        super(x, y);
+    }
 }

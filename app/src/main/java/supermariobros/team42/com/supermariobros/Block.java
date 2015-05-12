@@ -5,15 +5,18 @@ package supermariobros.team42.com.supermariobros;
  */
 public abstract class Block
 {
-    private float x;
+    private float x; // top left corner
     private float y;
 
-    private float width; // top left corner
+    private float width;
     private float velocity;
 
-    public Block()
+
+    public Block(float x, float y)
     {
         width = SuperMarioSurfaceView.WIDTH / 15.0f;
+        this.x = x;
+        this.y = y;
     }
 
     public float getWidth() {

@@ -7,10 +7,18 @@ import java.util.ArrayList;
  */
 public class Level
 {
-    // yay nothing can go wrong
-    private ArrayList<Block> blockList;
-    private ArrayList<Enemy> enemyList;
-    private ArrayList<Ground> groundList;
-    private ArrayList<>
+    protected ArrayList<Block> blockList;
+    protected ArrayList<Enemy> enemyList;
+    protected ArrayList<Ground> groundList;
+
+
+    public Level()
+    {
+        blockList = new ArrayList<Block>();
+        enemyList = new ArrayList<Enemy>();
+        groundList = new ArrayList<Ground>();
+    }
+
+
 
 }

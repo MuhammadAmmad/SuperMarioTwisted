@@ -5,7 +5,8 @@ import android.graphics.Canvas;
 /**
  * Created by Daniel on 5/11/2015.
  */
-public class Ground implements TimeConscious {
+public class Ground implements TimeConscious
+{
 
     private float velocity;
     private float x;
@@ -24,6 +25,7 @@ public class Ground implements TimeConscious {
         x = 0.0f;
         y = 0.0f;
     }
+
     public void setVelocity(float v)
     {
         velocity = v;

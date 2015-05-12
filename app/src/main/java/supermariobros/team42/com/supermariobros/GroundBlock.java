@@ -5,4 +5,9 @@ package supermariobros.team42.com.supermariobros;
  */
 public class GroundBlock extends Block
 {
+
+    public GroundBlock(float x, float y)
+    {
+        super(x,y);
+    }
 }

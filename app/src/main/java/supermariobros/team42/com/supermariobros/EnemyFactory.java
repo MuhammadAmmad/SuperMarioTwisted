@@ -9,7 +9,6 @@ import java.util.Random;
 public class EnemyFactory implements TimeConscious
 {
     private ArrayList<Enemy> enemyList;
-    private Random rand = new Random();
     private int type;
     private float x, y;
 
