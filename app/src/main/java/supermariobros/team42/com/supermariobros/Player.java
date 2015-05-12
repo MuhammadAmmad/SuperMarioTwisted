@@ -5,9 +5,13 @@ package supermariobros.team42.com.supermariobros;
  */
 public class Player
 {
-    private float velocity;
+    private float velocityY;
     private float y;
     private final float x;
 
+   public Player()
+   {
+        x = SuperMarioSurfaceView.WIDTH / 5.0f;
+   }
 
 }

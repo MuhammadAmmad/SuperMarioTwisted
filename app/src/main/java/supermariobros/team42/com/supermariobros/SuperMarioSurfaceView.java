@@ -11,6 +11,9 @@ import android.view.SurfaceView;
  */
 public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.Callback, TimeConscious
 {
+    public static float WIDTH;
+    public static float  HEIGHT;
+
     public SuperMarioSurfaceView(Context context)
     {
         super(context);
@@ -21,6 +24,8 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
     @Override
     public void surfaceCreated(SurfaceHolder holder)
     {
+        WIDTH = getWidth();
+        HEIGHT = getHeight();
         /*
          @Override
     public void surfaceCreated(SurfaceHolder holder) {
