@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Created by Daniel on 5/11/2015.
  */
-public class Level
+public abstract class Level
 {
     protected ArrayList<Block> blockList;
     protected ArrayList<Enemy> enemyList;

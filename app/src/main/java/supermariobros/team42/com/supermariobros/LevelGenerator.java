@@ -14,7 +14,7 @@ public class LevelGenerator
 
     public Level createLevel()
     {
-        Level newLevel = new Level();
+      //  Level newLevel = new Level();
         currentX = 3.0f * SuperMarioSurfaceView.WIDTH / 15.0f;
         // generate level elements such as blocks and items
         for (int i = 0; i < 5; i++)
@@ -26,11 +26,11 @@ public class LevelGenerator
                 {
 
                     case 1:
-                        newLevel.blockList.add(new BreakableBlock(currentX, FLOATINGHEIGHT));
+                        //newLevel.blockList.add(new BreakableBlock(currentX, FLOATINGHEIGHT));
                         currentX += SuperMarioSurfaceView.WIDTH / 15.0f;
                         break;
                     case 2:
-                        newLevel.blockList.add(new QuestionBlock(currentX, FLOATINGHEIGHT));
+                        //newLevel.blockList.add(new QuestionBlock(currentX, FLOATINGHEIGHT));
                         currentX += SuperMarioSurfaceView.WIDTH / 15.0f;
                         break;
 
@@ -38,5 +38,7 @@ public class LevelGenerator
                 }
             }
         }
+
+        return null;
     }
 }

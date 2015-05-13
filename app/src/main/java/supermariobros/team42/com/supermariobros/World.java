@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 /**
  * Created by Daniel on 5/11/2015.
  */
-public class World
+public class World implements TimeConscious
 {
     public static final float g = 9.8f;
     Player player;

@@ -9,12 +9,14 @@ public class Ground implements TimeConscious
 {
 
     private float velocity;
+
+
+
     private float x;
     private float y;
 
-    public Ground(float velocity, float x, float y)
+    public Ground(float x, float y)
     {
-        this.velocity = velocity;
         this.x = x;
         this.y = y;
     }
@@ -35,5 +37,30 @@ public class Ground implements TimeConscious
     public void tick(Canvas c)
     {
 
+    }
+
+    public float getX()
+    {
+        return x;
+    }
+
+    public void setX(float x)
+    {
+        this.x = x;
+    }
+
+    public float getVelocity()
+    {
+        return velocity;
+    }
+
+    public float getY()
+    {
+        return y;
+    }
+
+    public void setY(float y)
+    {
+        this.y = y;
     }
 }

@@ -1,7 +1,8 @@
 package supermariobros.team42.com.supermariobros;
 
+import android.graphics.Canvas;
+
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Created by Daniel on 5/11/2015.
@@ -15,6 +16,12 @@ public class EnemyFactory implements TimeConscious
     public EnemyFactory(Level l)
     {
         /* add enemies to enemyList */
+    }
+
+    @Override
+    public void tick(Canvas c)
+    {
+
     }
 
 }
