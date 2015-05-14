@@ -10,6 +10,7 @@ public abstract class Level
     protected ArrayList<Block> blockList;
     protected ArrayList<Enemy> enemyList;
     protected ArrayList<Ground> groundList;
+    protected Flag flag;
 
 
     public Level()
@@ -17,6 +18,7 @@ public abstract class Level
         blockList = new ArrayList<Block>();
         enemyList = new ArrayList<Enemy>();
         groundList = new ArrayList<Ground>();
+        flag = new Flag();
     }
 
 

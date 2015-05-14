@@ -19,6 +19,8 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
     public static float WIDTH;
     public static float  HEIGHT;
     public static float BLOCKWIDTH;
+    public static float GROUNDHEIGHT;
+    public static float g = 9.8f;
     SuperMarioRenderThread renderThread;
     Paint paint = new Paint();
     Level1 testLevel;
@@ -49,6 +51,7 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
         WIDTH = getWidth();
         HEIGHT = getHeight();
         BLOCKWIDTH = WIDTH / 15.0f;
+        GROUNDHEIGHT = HEIGHT - BLOCKWIDTH;
         renderThread = new SuperMarioRenderThread(this);
         renderThread.start();
         testLevel = new Level1();
@@ -95,14 +98,21 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
 
         for( Block b : testLevel.blockList )
         {
-            dst = new Rect((int)b.getX(), (int) b.getY(), (int) (b.getX()+BLOCKWIDTH), (int) (b.getY()+ BLOCKWIDTH));
-            c.drawBitmap(groundblock, null, dst, paint);
+            // only draw the blocks on screen
+            if( b.getX() <= WIDTH && b.getX() >= 0 )
+            {
+                dst = new Rect((int) b.getX(), (int) b.getY(), (int) (b.getX() + BLOCKWIDTH), (int) (b.getY() + BLOCKWIDTH));
+                c.drawBitmap(groundblock, null, dst, paint);
+            }
         }
 
         for( Ground g : testLevel.groundList)
         {
-            dst = new Rect((int)g.getX(), (int) g.getY(), (int) (g.getX()+WIDTH), (int) (HEIGHT));
-            c.drawBitmap(ground, null, dst, paint);
+            if( g.getX() <= WIDTH && g.getX() >= 0)
+            {
+                dst = new Rect((int) g.getX(), (int) g.getY(), (int) (g.getX() + WIDTH), (int) (HEIGHT));
+                c.drawBitmap(ground, null, dst, paint);
+            }
         }
 
     }

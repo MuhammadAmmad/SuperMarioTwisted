@@ -3,7 +3,7 @@ package supermariobros.team42.com.supermariobros;
 /**
  * Created by Daniel on 5/11/2015.
  */
-public abstract class Block
+public abstract class Block implements TimeConscious
 {
     private float x; // top left corner
     private float y;

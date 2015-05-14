@@ -1,5 +1,7 @@
 package supermariobros.team42.com.supermariobros;
 
+import android.graphics.Canvas;
+
 /**
  * Created by Daniel on 5/11/2015.
  */
@@ -10,5 +12,21 @@ public class BreakableBlock extends Block
     public BreakableBlock(float x, float y)
     {
         super(x, y);
+    }
+
+    public void tick(Canvas c)
+    {
+        if (!smashed)
+        {
+            // blocks move opposite of mario
+            if (Player.movingLeft)
+            {
+                setX(getX() + 10.0f);
+            }
+            else if (Player.movingRight)
+            {
+                setX(getX() - 10.0f);
+            }
+        }
     }
 }
