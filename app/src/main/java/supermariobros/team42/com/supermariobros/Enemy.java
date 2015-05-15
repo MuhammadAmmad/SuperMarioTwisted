@@ -1,9 +1,11 @@
 package supermariobros.team42.com.supermariobros;
 
+import android.graphics.Canvas;
+
 /**
  * Created by Daniel on 5/11/2015.
  */
-public class Enemy {
+public class Enemy implements TimeConscious{
     private float velocity;
     private float y;
     private float x;
@@ -46,5 +48,10 @@ public class Enemy {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public void tick(Canvas c)
+    {
+
     }
 }

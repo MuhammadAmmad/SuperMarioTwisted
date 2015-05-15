@@ -51,6 +51,21 @@ public abstract class Block implements TimeConscious
         this.velocity = velocity;
     }
 
+    public void move()
+    {
+
+            // blocks move opposite of mario
+            if (Player.movingLeft)
+            {
+                setX(getX() + 10.0f);
+            }
+            else if (Player.movingRight)
+            {
+                setX(getX() - 10.0f);
+            }
+
+    }
+
 
 
 }

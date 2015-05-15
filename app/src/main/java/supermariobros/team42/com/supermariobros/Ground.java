@@ -36,7 +36,15 @@ public class Ground implements TimeConscious
     @Override
     public void tick(Canvas c)
     {
-
+        // blocks move opposite of mario
+        if (Player.movingLeft)
+        {
+            setX(getX() + 10.0f);
+        }
+        else if (Player.movingRight)
+        {
+            setX(getX() - 10.0f);
+        }
     }
 
     public float getX()
@@ -63,4 +71,5 @@ public class Ground implements TimeConscious
     {
         this.y = y;
     }
+
 }

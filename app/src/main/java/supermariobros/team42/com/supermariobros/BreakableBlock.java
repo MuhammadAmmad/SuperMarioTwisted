@@ -18,15 +18,7 @@ public class BreakableBlock extends Block
     {
         if (!smashed)
         {
-            // blocks move opposite of mario
-            if (Player.movingLeft)
-            {
-                setX(getX() + 10.0f);
-            }
-            else if (Player.movingRight)
-            {
-                setX(getX() - 10.0f);
-            }
+            move();
         }
     }
 }
