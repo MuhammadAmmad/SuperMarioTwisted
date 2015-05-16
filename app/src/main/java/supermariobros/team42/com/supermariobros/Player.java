@@ -18,11 +18,12 @@ public class Player implements TimeConscious
     private boolean falling;
     private boolean jumping;
     private boolean alive = true;
+    private int timer = 0;
 
 
     public Player()
     {
-        x = SuperMarioSurfaceView.WIDTH/2 - SuperMarioSurfaceView.BLOCKWIDTH;
+        x = SuperMarioSurfaceView.WIDTH / 2 - SuperMarioSurfaceView.BLOCKWIDTH;
         y = SuperMarioSurfaceView.GROUNDHEIGHT - SuperMarioSurfaceView.BLOCKWIDTH;
         absolutePositionX = x;
 
@@ -30,71 +31,76 @@ public class Player implements TimeConscious
 
     public void tick(Canvas c)
     {
-        if(movingRight)
+        if (movingRight)
         {
-            absolutePositionX += 10.0f;
+            moveRight();
         }
         else if (movingLeft)
         {
-            absolutePositionX -= 10.0f;
+            moveLeft();
         }
 
-        if (falling)
+
+        velocityY += SuperMarioSurfaceView.g;
+        y += velocityY;
+
+        if( y > SuperMarioSurfaceView.GROUNDHEIGHT-SuperMarioSurfaceView.BLOCKWIDTH )
         {
-
-            // implement terminal velocity
-            if (!(velocityY + SuperMarioSurfaceView.g > 15.0f))
-            {
-                velocityY = velocityY + SuperMarioSurfaceView.g;
-            }
-            else
-            {
-                velocityY = 15.0f;
-            }
-
-            // check for ground
-
-            if (y + velocityY > SuperMarioSurfaceView.GROUNDHEIGHT)
-            {
-                y = SuperMarioSurfaceView.GROUNDHEIGHT;
-            }
-            else
-            {
-                y += velocityY;
-            }
+            velocityY = 0.0f;
+            y = SuperMarioSurfaceView.GROUNDHEIGHT - SuperMarioSurfaceView.BLOCKWIDTH;
         }
 
-        if (jumping)
-        {
-            // implement terminal velocity
-            if (!(velocityY - SuperMarioSurfaceView.g < -15.0f))
-            {
-                velocityY = velocityY + SuperMarioSurfaceView.g;
-            }
-            else
-            {
-                velocityY = -15.0f;
-            }
-
-            // check for ground
-
-            if (y + velocityY > SuperMarioSurfaceView.GROUNDHEIGHT)
-            {
-                y = SuperMarioSurfaceView.GROUNDHEIGHT;
-            }
-            else
-            {
-                y += velocityY;
-            }
-        }
-
-        else
-        {
-
-        }
 
 
     }
+
+    public void moveRight()
+    {
+        absolutePositionX += 10.0f;
+    }
+
+    public void moveLeft()
+    {
+        absolutePositionX -= 10.0f;
+    }
+
+    public void jump()
+    {
+
+
+        velocityY = -50.0f;
+
+
+        // check for ground
+
+        /*
+        if (y + velocityY > SuperMarioSurfaceView.GROUNDHEIGHT)
+        {
+            y = SuperMarioSurfaceView.GROUNDHEIGHT;
+        }
+        else
+        {
+            y += velocityY;
+        } */
+    }
+
+    public void fall()
+    {
+        // implement terminal velocity
+        velocityY = 15.0f;
+        y += velocityY;
+        // check for ground
+
+        if (y + velocityY > SuperMarioSurfaceView.GROUNDHEIGHT)
+        {
+            y = SuperMarioSurfaceView.GROUNDHEIGHT;
+        }
+        else
+        {
+            y += velocityY;
+        }
+    }
+
 
     public float getY()
     {

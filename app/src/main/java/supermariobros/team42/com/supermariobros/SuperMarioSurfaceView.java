@@ -223,7 +223,10 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
             g.tick(c);
         }
 
+        player.tick(c);
         level1.flag.tick(c);
+
+        marioRect.set((int) player.getX(), (int) player.getY(), (int)(player.getX()+BLOCKWIDTH), (int)(player.getY()+BLOCKWIDTH));
         renderGame(c);
     }
 
@@ -255,11 +258,13 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
                 else if (aButtonRect.contains((int)e.getX(), (int)e.getY()))
                 {
                     player.setJumping(true);
+                    player.jump();
                 }
                 else if (bButtonRect.contains((int)e.getX(), (int)e.getY()))
                 {
                     //player.action();
                 }
+
 
 
                 break;
