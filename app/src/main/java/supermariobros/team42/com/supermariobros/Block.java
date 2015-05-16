@@ -10,62 +10,70 @@ public abstract class Block implements TimeConscious
 
     private float width;
     private float velocity;
+    protected Player player;
 
-
-    public Block(float x, float y)
+    public Block(float x, float y, Player player)
     {
         width = SuperMarioSurfaceView.WIDTH / 15.0f;
         this.x = x;
         this.y = y;
+        this.player = player;
     }
 
-    public float getWidth() {
+    public float getWidth()
+    {
         return width;
     }
 
-    public void setWidth(float width) {
+    public void setWidth(float width)
+    {
         this.width = width;
     }
 
-    public float getX() {
+    public float getX()
+    {
         return x;
     }
 
-    public void setX(float x) {
+    public void setX(float x)
+    {
         this.x = x;
     }
 
-    public float getY() {
+    public float getY()
+    {
         return y;
     }
 
-    public void setY(float y) {
+    public void setY(float y)
+    {
         this.y = y;
     }
 
-    public float getVelocity() {
+    public float getVelocity()
+    {
         return velocity;
     }
 
-    public void setVelocity(float velocity) {
+    public void setVelocity(float velocity)
+    {
         this.velocity = velocity;
     }
 
-    public void move()
+    public void move(Player player)
     {
 
-            // blocks move opposite of mario
-            if (Player.movingLeft)
-            {
-                setX(getX() + 10.0f);
-            }
-            else if (Player.movingRight)
-            {
-                setX(getX() - 10.0f);
-            }
+        // blocks move opposite of mario
+        if (player.isMovingLeft())
+        {
+            setX(getX() + 10.0f);
+        }
+        else if (player.isMovingRight())
+        {
+            setX(getX() - 10.0f);
+        }
 
     }
-
 
 
 }

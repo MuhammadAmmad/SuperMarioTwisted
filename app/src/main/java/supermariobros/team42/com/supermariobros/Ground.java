@@ -11,14 +11,15 @@ public class Ground implements TimeConscious
     private float velocity;
 
 
-
+    private Player player;
     private float x;
     private float y;
 
-    public Ground(float x, float y)
+    public Ground(float x, float y, Player player)
     {
         this.x = x;
         this.y = y;
+        this.player = player;
     }
 
     public Ground()
@@ -37,11 +38,11 @@ public class Ground implements TimeConscious
     public void tick(Canvas c)
     {
         // blocks move opposite of mario
-        if (Player.movingLeft)
+        if (player.isMovingLeft())
         {
             setX(getX() + 10.0f);
         }
-        else if (Player.movingRight)
+        else if (player.isMovingRight())
         {
             setX(getX() - 10.0f);
         }

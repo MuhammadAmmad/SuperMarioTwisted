@@ -10,19 +10,35 @@ public class Player implements TimeConscious
     private float velocityY;
     private float y;
     private final float x;
-    public static boolean movingRight;
-    public static boolean movingLeft;
+    private float absolutePositionX; // used to check if mario has reached edges of screen
+
+
+    private boolean movingRight;
+    private boolean movingLeft;
     private boolean falling;
     private boolean jumping;
     private boolean alive = true;
 
+
     public Player()
     {
-        x = SuperMarioSurfaceView.WIDTH / 5.0f;
+        x = SuperMarioSurfaceView.WIDTH/2 - SuperMarioSurfaceView.BLOCKWIDTH;
+        y = SuperMarioSurfaceView.GROUNDHEIGHT - SuperMarioSurfaceView.BLOCKWIDTH;
+        absolutePositionX = x;
+
     }
 
     public void tick(Canvas c)
     {
+        if(movingRight)
+        {
+            absolutePositionX += 10.0f;
+        }
+        else if (movingLeft)
+        {
+            absolutePositionX -= 10.0f;
+        }
+
         if (falling)
         {
 
@@ -70,6 +86,11 @@ public class Player implements TimeConscious
             {
                 y += velocityY;
             }
+        }
+
+        else
+        {
+
         }
 
 
@@ -129,6 +150,26 @@ public class Player implements TimeConscious
     public void setAlive(boolean alive)
     {
         this.alive = alive;
+    }
+
+    public boolean isMovingRight()
+    {
+        return movingRight;
+    }
+
+    public void setMovingRight(boolean movingRight)
+    {
+        this.movingRight = movingRight;
+    }
+
+    public boolean isMovingLeft()
+    {
+        return movingLeft;
+    }
+
+    public void setMovingLeft(boolean movingLeft)
+    {
+        this.movingLeft = movingLeft;
     }
 
 }

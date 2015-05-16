@@ -12,6 +12,8 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.util.ArrayList;
+
 /**
  * Created by Daniel on 5/11/2015.
  */
@@ -27,6 +29,9 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
     SuperMarioRenderThread renderThread;
     Paint paint = new Paint();
     Level1 level1;
+    Player player;
+    private ArrayList<Bitmap> marioWalk = new ArrayList<Bitmap>();
+
 
     BitmapFactory.Options options = new BitmapFactory.Options();
     // load bitmaps
@@ -62,10 +67,17 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
     Bitmap flag = BitmapFactory.decodeResource(getResources(), R.drawable.flag, options);
     Bitmap leftarrow = BitmapFactory.decodeResource(getResources(), R.drawable.leftarrow, options);
     Bitmap rightarrow = BitmapFactory.decodeResource(getResources(), R.drawable.rightarrow, options);
+    Bitmap abutton = BitmapFactory.decodeResource(getResources(), R.drawable.abutton, options);
+    Bitmap bbutton = BitmapFactory.decodeResource(getResources(), R.drawable.bbutton, options);
+    Bitmap mario = BitmapFactory.decodeResource(getResources(), R.drawable.mario, options);
+
+
     Rect dst = new Rect();
     Rect leftButtonRect;
     Rect rightButtonRect;
-
+    Rect aButtonRect;
+    Rect bButtonRect;
+    Rect marioRect;
 
     public SuperMarioSurfaceView(Context context)
     {
@@ -82,24 +94,19 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
         HEIGHT = getHeight();
         BLOCKWIDTH = WIDTH / 15.0f;
         GROUNDHEIGHT = HEIGHT - BLOCKWIDTH;
+
+        // initialize all variables here
+        player = new Player();
         renderThread = new SuperMarioRenderThread(this);
         renderThread.start();
-        level1 = new Level1();
+        level1 = new Level1(player);
         leftButtonRect = new Rect(0, (int)(4.0f/5*HEIGHT), (int)(1.0f/5*WIDTH), (int) HEIGHT);
         rightButtonRect = new Rect((int)(1.0f/5*WIDTH), (int)(4.0f/5*HEIGHT), (int)(2.0f/5*WIDTH), (int) HEIGHT);
 
+        bButtonRect = new Rect((int)(5.5f/8*WIDTH), (int)(4.0f/5*HEIGHT), (int)(6.5f/8*WIDTH), (int) HEIGHT);
+        aButtonRect = new Rect((int)(7.0f/8*WIDTH), (int)(4.0f/5*HEIGHT), (int)(WIDTH), (int) HEIGHT);
+        marioRect = new Rect((int) player.getX(),(int) player.getY(), (int) (player.getX()+BLOCKWIDTH), (int)(GROUNDHEIGHT));
 
-        /*
-         @Override
-    public void surfaceCreated(SurfaceHolder holder) {
-        renderThread = new DashTillPuffRenderThread(this);
-        renderThread.start();
-		background = new DashTillPuffBackground(this);
-		trajectory = new Trajectory( this );
-		factory    = new CosmicFactory(this, trajectory);
-		bullet     = new Bullet(this);
-    }
-         */
     }
 
     @Override
@@ -184,9 +191,15 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
 
                 // draw on screen buttons
                 paint.setAlpha(100);
-                c.drawBitmap(leftarrow,null,leftButtonRect, paint);
+                c.drawBitmap(leftarrow, null, leftButtonRect, paint);
                 c.drawBitmap(rightarrow,null,rightButtonRect, paint);
+                c.drawBitmap(abutton, null, aButtonRect, paint);
+                c.drawBitmap(bbutton, null, bButtonRect, paint);
                 paint.setAlpha(255);
+
+                // draw mario
+
+                c.drawBitmap(mario, null, marioRect, paint);
                 break;
 
         }
@@ -218,6 +231,7 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
     public boolean onTouchEvent(MotionEvent e)
     {
 
+        int pointer;
         switch (e.getAction())
         {
             case MotionEvent.ACTION_DOWN:
@@ -226,37 +240,53 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
                 // check if left button is pressed
                 if (leftButtonRect.contains((int)e.getX(), (int)e.getY()))
                 {
-                    Player.movingRight = false;
-                    Player.movingLeft = true;
+                    player.setMovingRight(false);
+                    player.setMovingLeft(true);
                     Log.d(TAG, "\nLeft button down");
 
                 }
                 else if (rightButtonRect.contains((int)e.getX(), (int)e.getY()))
                 {
-                    Player.movingRight = true;
-                    Player.movingLeft = false;
+                    player.setMovingRight(true);
+                    player.setMovingLeft(false);
                     Log.d(TAG, "\nRight button down");
 
                 }
+                else if (aButtonRect.contains((int)e.getX(), (int)e.getY()))
+                {
+                    player.setJumping(true);
+                }
+                else if (bButtonRect.contains((int)e.getX(), (int)e.getY()))
+                {
+                    //player.action();
+                }
+
 
                 break;
             case MotionEvent.ACTION_UP:
 
                 // check if left button is released
-                if (leftButtonRect.contains((int)e.getX(), (int)e.getY()))
+
+                if (!leftButtonRect.contains((int)e.getX(), (int)e.getY()))
                 {
-                    Player.movingRight = false;
-                    Player.movingLeft = false;
+                    player.setMovingRight(false);
+                    player.setMovingLeft(false);
                     Log.d(TAG, "\nLeft button up");
 
                 }
-                else if (rightButtonRect.contains((int)e.getX(), (int)e.getY()))
+                else if (!rightButtonRect.contains((int)e.getX(), (int)e.getY()))
                 {
-                    Player.movingRight = false;
-                    Player.movingLeft = false;
+                    player.setMovingRight(false);
+                    player.setMovingLeft(false);
                     Log.d(TAG, "\nRight button up");
 
                 }
+                else if (!aButtonRect.contains((int)e.getX(), (int)e.getY()))
+                {
+                    player.setJumping(false);
+
+                }
+
 
 
                 break;
