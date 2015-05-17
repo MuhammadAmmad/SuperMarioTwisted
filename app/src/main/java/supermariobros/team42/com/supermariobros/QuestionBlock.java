@@ -9,16 +9,17 @@ public class QuestionBlock extends Block
 {
     private int item; // 0 for coin, 1 for fireflower, 2 for iceflower
 
-    public QuestionBlock(float x, float y, int item, Player player)
+    public QuestionBlock(float x, float y, int item)
     {
-        super(x, y, player);
+        super(x, y);
         this.item = item;
+        typeOfBlock = 3;
     }
 
 
 
     public void tick(Canvas c)
     {
-        move(player);
+        move();
     }
 }

@@ -13,12 +13,7 @@ public class Flag implements TimeConscious
 
     private float y;
     private boolean activated;
-    private Player player;
 
-    public Flag(Player player)
-    {
-        this.player = player;
-    }
 
     public float getY()
     {
@@ -53,11 +48,11 @@ public class Flag implements TimeConscious
     public void tick(Canvas c)
     {
         // blocks move opposite of mario
-        if (player.isMovingLeft())
+        if (SuperMarioSurfaceView.player.isMovingLeft())
         {
             setX(getX() + 10.0f);
         }
-        else if (player.isMovingRight())
+        else if (SuperMarioSurfaceView.player.isMovingRight())
         {
             setX(getX() - 10.0f);
         }

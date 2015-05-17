@@ -11,16 +11,15 @@ public abstract class Level
     protected ArrayList<Enemy> enemyList;
     protected ArrayList<Ground> groundList;
     protected Flag flag;
-    private Player player;
 
 
-    public Level(Player player)
+    public Level()
     {
-        this.player = player;
+
         blockList = new ArrayList<Block>();
         enemyList = new ArrayList<Enemy>();
         groundList = new ArrayList<Ground>();
-        flag = new Flag(player);
+        flag = new Flag();
     }
 
 

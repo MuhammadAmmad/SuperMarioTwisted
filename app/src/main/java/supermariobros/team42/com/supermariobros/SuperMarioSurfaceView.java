@@ -29,7 +29,7 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
     SuperMarioRenderThread renderThread;
     Paint paint = new Paint();
     Level1 level1;
-    Player player;
+    public static Player player;
     private ArrayList<Bitmap> marioWalk = new ArrayList<Bitmap>();
 
 
@@ -96,10 +96,12 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
         GROUNDHEIGHT = HEIGHT - BLOCKWIDTH;
 
         // initialize all variables here
-        player = new Player();
         renderThread = new SuperMarioRenderThread(this);
         renderThread.start();
-        level1 = new Level1(player);
+        level1 = new Level1();
+        player = new Player(level1);
+
+
         leftButtonRect = new Rect(0, (int)(4.0f/5*HEIGHT), (int)(1.0f/5*WIDTH), (int) HEIGHT);
         rightButtonRect = new Rect((int)(1.0f/5*WIDTH), (int)(4.0f/5*HEIGHT), (int)(2.0f/5*WIDTH), (int) HEIGHT);
 

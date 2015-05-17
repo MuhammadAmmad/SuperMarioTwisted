@@ -10,16 +10,17 @@ public class BreakableBlock extends Block
     private boolean smashed = false;
 
 
-    public BreakableBlock(float x, float y, Player player)
+    public BreakableBlock(float x, float y)
     {
-        super(x, y, player);
+        super(x, y);
+        typeOfBlock = 1;
     }
 
     public void tick(Canvas c)
     {
         if (!smashed)
         {
-            move(player);
+            move();
         }
     }
 }

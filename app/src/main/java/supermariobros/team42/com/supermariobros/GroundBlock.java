@@ -8,15 +8,16 @@ import android.graphics.Canvas;
 public class GroundBlock extends Block
 {
 
-    public GroundBlock(float x, float y, Player player)
+    public GroundBlock(float x, float y)
     {
-        super(x,y, player);
+        super(x,y);
+        typeOfBlock = 2;
     }
 
     public void tick(Canvas c)
     {
 
-            move(player);
+            move();
 
     }
 }
