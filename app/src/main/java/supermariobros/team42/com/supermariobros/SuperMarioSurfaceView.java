@@ -34,42 +34,22 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
 
 
     BitmapFactory.Options options = new BitmapFactory.Options();
-    // load bitmaps
-    Bitmap beemush = BitmapFactory.decodeResource(getResources(), R.drawable.beemush, options);
-    Bitmap blockused = BitmapFactory.decodeResource(getResources(), R.drawable.blockused, options);
-    /* Bitmap blooper = BitmapFactory.decodeResource(getResources(), R.drawable.blooper, options);
-     Bitmap boo = BitmapFactory.decodeResource(getResources(), R.drawable.boo, options);
-     Bitmap bowser = BitmapFactory.decodeResource(getResources(), R.drawable.bowser, options);
-     Bitmap bullet = BitmapFactory.decodeResource(getResources(), R.drawable.bullet, options);
-     Bitmap chainchomp = BitmapFactory.decodeResource(getResources(), R.drawable.chainchomp, options);*/ Bitmap breakableblock = BitmapFactory.decodeResource(getResources(), R.drawable.breakableblock, options);
-    Bitmap ground = BitmapFactory.decodeResource(getResources(), R.drawable.ground, options);
-    /*Bitmap iceflower = BitmapFactory.decodeResource(getResources(), R.drawable.iceflower, options);
-    Bitmap mariojump = BitmapFactory.decodeResource(getResources(), R.drawable.mariojump, options);
-    Bitmap megamush = BitmapFactory.decodeResource(getResources(), R.drawable.megamush, options);
-    Bitmap minimush = BitmapFactory.decodeResource(getResources(), R.drawable.minimush, options);
-    Bitmap redshell = BitmapFactory.decodeResource(getResources(), R.drawable.redshell, options);
-    Bitmap retro1up = BitmapFactory.decodeResource(getResources(), R.drawable.retro1up, options);
-    Bitmap retro1up2 = BitmapFactory.decodeResource(getResources(), R.drawable.retro1up2, options);
-    Bitmap retrofireflower = BitmapFactory.decodeResource(getResources(), R.drawable.retrofireflower, options);
-    Bitmap retroflower = BitmapFactory.decodeResource(getResources(), R.drawable.retroflower, options);
-    Bitmap retromario2 = BitmapFactory.decodeResource(getResources(), R.drawable.retromario2, options);
-    Bitmap retromario3 = BitmapFactory.decodeResource(getResources(), R.drawable.retromario3, options);
-    Bitmap retromush = BitmapFactory.decodeResource(getResources(), R.drawable.retromush, options);
-    Bitmap retromush1 = BitmapFactory.decodeResource(getResources(), R.drawable.retromush1, options);
-    Bitmap retromush2 = BitmapFactory.decodeResource(getResources(), R.drawable.retromush2, options);
-    Bitmap retromush3 = BitmapFactory.decodeResource(getResources(), R.drawable.retromush3, options);
-    Bitmap retromush4 = BitmapFactory.decodeResource(getResources(), R.drawable.retromush4, options);
-    Bitmap starmush1 = BitmapFactory.decodeResource(getResources(), R.drawable.starmush1, options);
-    Bitmap starmush2 = BitmapFactory.decodeResource(getResources(), R.drawable.starmush2, options);
-    Bitmap upmush = BitmapFactory.decodeResource(getResources(), R.drawable.upmush, options);*/ Bitmap questionblock = BitmapFactory.decodeResource(getResources(), R.drawable.questionblock, options);
-    Bitmap flag = BitmapFactory.decodeResource(getResources(), R.drawable.flag, options);
-    Bitmap leftarrow = BitmapFactory.decodeResource(getResources(), R.drawable.leftarrow, options);
-    Bitmap rightarrow = BitmapFactory.decodeResource(getResources(), R.drawable.rightarrow, options);
-    Bitmap abutton = BitmapFactory.decodeResource(getResources(), R.drawable.abutton, options);
-    Bitmap bbutton = BitmapFactory.decodeResource(getResources(), R.drawable.bbutton, options);
-    Bitmap mario = BitmapFactory.decodeResource(getResources(), R.drawable.mario, options);
 
+    // bitmaps
 
+    private Bitmap beemush;
+    private Bitmap blockused;
+    private Bitmap ground;
+    private Bitmap questionblock;
+    private Bitmap flag;
+    private Bitmap leftarrow;
+    private Bitmap rightarrow;
+    private Bitmap abutton;
+    private Bitmap bbutton;
+    private Bitmap mario;
+    private Bitmap breakableblock;
+
+    // rectangles
     Rect dst = new Rect();
     Rect leftButtonRect;
     Rect rightButtonRect;
@@ -88,24 +68,40 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
     @Override
     public void surfaceCreated(SurfaceHolder holder)
     {
+        // start render thread
+        renderThread = new SuperMarioRenderThread(this);
+        renderThread.start();
+
+        // initialize all variables here
+
+        // constants
         WIDTH = getWidth();
         HEIGHT = getHeight();
         BLOCKWIDTH = WIDTH / 15.0f;
         GROUNDHEIGHT = HEIGHT - BLOCKWIDTH;
 
-        // initialize all variables here
-        renderThread = new SuperMarioRenderThread(this);
-        renderThread.start();
+        options.inSampleSize = 2;
         level1 = new Level1();
         player = new Player(level1);
-
-
         leftButtonRect = new Rect(0, (int) (4.0f / 5 * HEIGHT), (int) (1.0f / 5 * WIDTH), (int) HEIGHT);
         rightButtonRect = new Rect((int) (1.0f / 5 * WIDTH), (int) (4.0f / 5 * HEIGHT), (int) (2.0f / 5 * WIDTH), (int) HEIGHT);
-
         bButtonRect = new Rect((int) (5.5f / 8 * WIDTH), (int) (4.0f / 5 * HEIGHT), (int) (6.5f / 8 * WIDTH), (int) HEIGHT);
         aButtonRect = new Rect((int) (7.0f / 8 * WIDTH), (int) (4.0f / 5 * HEIGHT), (int) (WIDTH), (int) HEIGHT);
         marioRect = new Rect((int) player.getX(), (int) player.getY(), (int) (player.getX() + BLOCKWIDTH), (int) (GROUNDHEIGHT));
+        beemush = BitmapFactory.decodeResource(getResources(), R.drawable.beemush, options);
+        blockused = BitmapFactory.decodeResource(getResources(), R.drawable.blockused, options);
+
+        breakableblock = BitmapFactory.decodeResource(getResources(), R.drawable.breakableblock, options);
+        ground = BitmapFactory.decodeResource(getResources(), R.drawable.ground, options);
+
+        questionblock = BitmapFactory.decodeResource(getResources(), R.drawable.questionblock, options);
+        flag = BitmapFactory.decodeResource(getResources(), R.drawable.flag, options);
+        leftarrow = BitmapFactory.decodeResource(getResources(), R.drawable.leftarrow, options);
+        rightarrow = BitmapFactory.decodeResource(getResources(), R.drawable.rightarrow, options);
+        abutton = BitmapFactory.decodeResource(getResources(), R.drawable.abutton, options);
+        bbutton = BitmapFactory.decodeResource(getResources(), R.drawable.bbutton, options);
+        mario = BitmapFactory.decodeResource(getResources(), R.drawable.mario, options);
+        breakableblock = BitmapFactory.decodeResource(getResources(), R.drawable.breakableblock, options);
 
     }
 
