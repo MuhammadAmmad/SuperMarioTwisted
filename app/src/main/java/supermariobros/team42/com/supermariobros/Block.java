@@ -64,11 +64,11 @@ public abstract class Block implements TimeConscious
     {
 
         // blocks move opposite of mario
-        if (SuperMarioSurfaceView.player.isMovingLeft())
+        if (SuperMarioSurfaceView.player.isMovingLeft() )
         {
             setX(getX() + 10.0f);
         }
-        else if (SuperMarioSurfaceView.player.isMovingRight())
+        else if (SuperMarioSurfaceView.player.isMovingRight() )
         {
             setX(getX() - 10.0f);
         }

@@ -48,11 +48,11 @@ public class Flag implements TimeConscious
     public void tick(Canvas c)
     {
         // blocks move opposite of mario
-        if (SuperMarioSurfaceView.player.isMovingLeft())
+        if (SuperMarioSurfaceView.player.isMovingLeft() && !SuperMarioSurfaceView.player.isOnRightOfBlock())
         {
             setX(getX() + 10.0f);
         }
-        else if (SuperMarioSurfaceView.player.isMovingRight())
+        else if (SuperMarioSurfaceView.player.isMovingRight() && !SuperMarioSurfaceView.player.isOnLeftOfBlock())
         {
             setX(getX() - 10.0f);
         }
