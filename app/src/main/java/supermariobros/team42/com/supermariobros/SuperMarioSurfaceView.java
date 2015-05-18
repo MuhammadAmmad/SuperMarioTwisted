@@ -19,13 +19,13 @@ import java.util.ArrayList;
  */
 public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.Callback, TimeConscious
 {
+    public static String TAG = "SuperMario";
     public static float WIDTH;
     public static float HEIGHT;
     public static float BLOCKWIDTH;
     public static float GROUNDHEIGHT;
     public static int gameState = 1; // 1 for playing, 0 for dead
     public static float g = 5.0f;
-    private String TAG = "SuperMarioSurfaceView";
     SuperMarioRenderThread renderThread;
     Paint paint = new Paint();
     Level1 level1;

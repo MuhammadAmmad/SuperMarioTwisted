@@ -1,6 +1,8 @@
 package supermariobros.team42.com.supermariobros;
 
 import android.graphics.Canvas;
+import android.graphics.Rect;
+import android.util.Log;
 
 /**
  * Created by Daniel on 5/11/2015.
@@ -13,10 +15,8 @@ public class Player implements TimeConscious
     private float absolutePositionX; // used to check if mario has reached edges of screen
     private boolean movingRight;
     private boolean movingLeft;
-    private boolean onLeftOfBlock;
-    private boolean onRightOfBlock;
-
-
+    public static boolean onLeftOfBlock;
+    public static boolean onRightOfBlock;
 
     private boolean onTopOfBlock;
     private boolean hittingBlockFromBelow;
@@ -25,7 +25,6 @@ public class Player implements TimeConscious
     private boolean alive = true;
     private float padding = 5.0f;
     private Level l;
-
 
 
     public Player(Level l)
@@ -39,118 +38,126 @@ public class Player implements TimeConscious
 
     public void tick(Canvas c)
     {
+        int col = -1;
+        boolean collided = false;
+
 
         if (velocityY > 0.0f)
         {
             falling = true;
             jumping = false;
         }
+        else if (velocityY < 0.0f)
+        {
+            jumping = true;
+            falling = false;
+        }
 
 
+        loop1:
         // check for collisions
         for (Block b : l.blockList)
         {
+            col = collision(b.getX(), b.getY());
 
-            // walking in to block on left
-            if (!jumping && !falling && x + SuperMarioSurfaceView.BLOCKWIDTH <= b.getX() + padding && x + SuperMarioSurfaceView.BLOCKWIDTH >= b.getX() - padding && y >= b.getY() && y <= b.getY() + SuperMarioSurfaceView.BLOCKWIDTH)
+            if (col != -1)
             {
-                movingRight = false;
-                onLeftOfBlock = true;
+                switch (col)
+                {
+                    // colliding with top of block
+                    case 0:
+                        if (falling)
+                        {
+                            velocityY = 0.0f;
+                            falling = false;
+                            onTopOfBlock = true;
+
+
+                        }
+                        break loop1;
+                    // colliding with right edge
+                    case 1:
+                        if (!jumping && !falling)
+                        {
+                            movingLeft = false;
+                            onRightOfBlock = true;
+                        }
+                        // jumping colliding with right of block
+
+                        else if (jumping)
+                        {
+                            movingLeft = false;
+                            onRightOfBlock = true;
+                        }
+                        else if (falling)
+                        {
+                            movingLeft = false;
+                            onRightOfBlock = true;
+                        }
+                        break loop1;
+                    // bottom edge
+                    case 2:
+                        // jumping below block
+
+                        if (jumping)
+                        {
+                            velocityY = 0.0f;
+                            jumping = false;
+                            falling = true;
+                            hittingBlockFromBelow = true;
+
+                        }
+                        break loop1;
+
+
+                    //left edge
+                    case 3:
+                        if (!jumping && !falling)
+                        {
+                            movingRight = false;
+                            onLeftOfBlock = true;
+                        }
+
+                        // mario jumping and colliding with block on left
+                        else if (jumping)
+                        {
+                            movingRight = false;
+                            onLeftOfBlock = true;
+                        }
+                        // mario falling and colliding with block1 left side
+                        else if (falling)
+                        {
+                            movingRight = false;
+                            onLeftOfBlock = true;
+
+                        }
+                        break loop1;
+
+                }
+
 
             }
 
-            // walking into block on right
-            else if (!jumping && !falling && x <= b.getX() + SuperMarioSurfaceView.BLOCKWIDTH + padding && x >= b.getX() + SuperMarioSurfaceView.BLOCKWIDTH - padding &&
-                    y >= b.getY() && y <= b.getY() + SuperMarioSurfaceView.BLOCKWIDTH)
-            {
-                movingLeft = false;
-                onRightOfBlock = true;
 
-            }
-            // mario jumping and colliding with block on left
-            else if (jumping && x + SuperMarioSurfaceView.BLOCKWIDTH <= b.getX() + padding && x + SuperMarioSurfaceView.BLOCKWIDTH >= b.getX() - padding && y >= b.getY() && y <= b.getY() + SuperMarioSurfaceView.BLOCKWIDTH)
-
-            {
-                movingRight = false;
-                onLeftOfBlock = true;
-
-            }
-            // mario falling and colliding with block1 left side
-            else if (falling && x + SuperMarioSurfaceView.BLOCKWIDTH <= b.getX() + padding && x + SuperMarioSurfaceView.BLOCKWIDTH >= b.getX() - padding && y >= b.getY() && y <= b.getY() + SuperMarioSurfaceView.BLOCKWIDTH)
-            {
-                movingRight = false;
-                onLeftOfBlock = true;
+        } // end for
 
 
-            }
-
-            // jumping colliding with right of block
-            else if (jumping && x <= b.getX() + SuperMarioSurfaceView.BLOCKWIDTH + padding && x >= b.getX() + SuperMarioSurfaceView.BLOCKWIDTH - padding &&
-                    y >= b.getY() && y <= b.getY() + SuperMarioSurfaceView.BLOCKWIDTH)
-            {
-
-                movingLeft = false;
-                onRightOfBlock = true;
-
-
-            }
-
-            // falling and colliding with right of block
-            else if (falling && x <= b.getX() + SuperMarioSurfaceView.BLOCKWIDTH + padding && x >= b.getX() + SuperMarioSurfaceView.BLOCKWIDTH - padding &&
-                    y >= b.getY() && y <= b.getY() + SuperMarioSurfaceView.BLOCKWIDTH)
-            {
-                movingLeft = false;
-                onRightOfBlock = true;
-
-            }
-
-            // falling on top of block
-            else if (falling && y + SuperMarioSurfaceView.BLOCKWIDTH >= b.getY() - padding &&
-                    y + SuperMarioSurfaceView.BLOCKWIDTH <= b.getY() + padding && x+SuperMarioSurfaceView.BLOCKWIDTH/2 >= b.getX() && x+SuperMarioSurfaceView.BLOCKWIDTH/2 <= b.getX() + SuperMarioSurfaceView.BLOCKWIDTH)
-            {
-                velocityY = 0.0f;
-                falling = false;
-                onTopOfBlock = true;
-
-
-                // make sure mario doesn't keep falling through block
-
-            }
-
-            // jumping below block
-            else if (jumping && y <= b.getY() + SuperMarioSurfaceView.BLOCKWIDTH + padding &&
-                    y >= b.getY() + SuperMarioSurfaceView.BLOCKWIDTH - padding && x >= b.getX() && x <= b.getX() + SuperMarioSurfaceView.BLOCKWIDTH)
-            {
-                velocityY = 0.0f;
-                jumping = false;
-                falling = true;
-                hittingBlockFromBelow = true;
-
-            }
-
-
-        }
-
-
-
-        // check for veritical collision
-        velocityY += SuperMarioSurfaceView.g;
-
-
-        if(velocityY < 0 && !hittingBlockFromBelow)
+        // check for vertical collision
+        if (falling || jumping)
         {
+            velocityY += SuperMarioSurfaceView.g;
             y += velocityY;
-            onTopOfBlock = false;
-
-
         }
-        else if (velocityY > 0 && !onTopOfBlock)
+
+        if (col != 3)
         {
-            y += velocityY;
-            hittingBlockFromBelow = false;
+            onLeftOfBlock = false;
         }
 
-
+        if (col != 1)
+        {
+            onRightOfBlock = false;
+        }
 
 
         if (y > SuperMarioSurfaceView.GROUNDHEIGHT - SuperMarioSurfaceView.BLOCKWIDTH)
@@ -162,16 +169,7 @@ public class Player implements TimeConscious
 
         }
 
-        /*
-        if (movingRight)
-        {
-            moveRight();
-        }
-        else if (movingLeft)
-        {
-            moveLeft();
-        }
-        */
+
     }
 
 
@@ -346,7 +344,6 @@ public class Player implements TimeConscious
     }
 
 
-
     public boolean isOnTopOfBlock()
     {
         return onTopOfBlock;
@@ -366,5 +363,47 @@ public class Player implements TimeConscious
     {
         this.hittingBlockFromBelow = hittingBlockFromBelow;
     }
+
+    // returns -1 for no collision, 0 for top collision, 1 for right side, 2 for bottom, 3 for left side
+    public int collision(float x1, float y1)
+    {
+        float padding = 25.0f;
+
+
+        Rect left = new Rect((int) (x1 - padding), (int) y1, (int) (x1), (int) (y1 + SuperMarioSurfaceView.BLOCKWIDTH));
+        Rect bot = new Rect((int) (x1 - padding), (int) (y1 + SuperMarioSurfaceView.BLOCKWIDTH), (int) (x1 + SuperMarioSurfaceView.BLOCKWIDTH + padding), (int) (y1 + SuperMarioSurfaceView.BLOCKWIDTH + padding));
+        Rect right = new Rect((int) (x1 + SuperMarioSurfaceView.BLOCKWIDTH), (int) y1, (int) (x1 + SuperMarioSurfaceView.BLOCKWIDTH + padding), (int) (y1 + SuperMarioSurfaceView.BLOCKWIDTH));
+        Rect top = new Rect((int) (x1 - padding), (int) (y1 - padding), (int) (x1 + SuperMarioSurfaceView.BLOCKWIDTH + padding), (int) (y1));
+
+        // check for collision in each region
+        if (left.contains((int) (x + SuperMarioSurfaceView.BLOCKWIDTH), (int) (y + SuperMarioSurfaceView.BLOCKWIDTH / 2)))
+        {
+            Log.d(SuperMarioSurfaceView.TAG, "Collided with left");
+
+            return 3;
+        }
+        else if (right.contains((int) (x), (int) (y + SuperMarioSurfaceView.BLOCKWIDTH)))
+        {
+            Log.d(SuperMarioSurfaceView.TAG, "Collided with right");
+
+            return 1;
+        }
+        else if (bot.contains((int) (x + SuperMarioSurfaceView.BLOCKWIDTH / 2), (int) y))
+        {
+            Log.d(SuperMarioSurfaceView.TAG, "Collided with bot");
+
+            return 2;
+        }
+        else if (top.contains((int) (x + SuperMarioSurfaceView.BLOCKWIDTH / 2), (int) (y + SuperMarioSurfaceView.BLOCKWIDTH)))
+        {
+            Log.d(SuperMarioSurfaceView.TAG, "Collided with top");
+            return 0;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+
 
 }
