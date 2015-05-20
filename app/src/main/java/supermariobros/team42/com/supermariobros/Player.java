@@ -58,6 +58,19 @@ public class Player implements TimeConscious
         // check for collisions
         for (Block b : l.blockList)
         {
+            //check for falling off edge
+            if (onTopOfBlock)
+            {
+                if (b.getX() >= x && (b.getX() + SuperMarioSurfaceView.BLOCKWIDTH) <= x)
+                {
+                    //do nothing yay!
+                }
+                else
+                {
+                    falling = true;
+                    onTopOfBlock = false;
+                }
+            }
             col = collision(b.getX(), b.getY());
 
             if (col != -1)
@@ -175,14 +188,14 @@ public class Player implements TimeConscious
 
     public void moveRight()
     {
-        absolutePositionX += 10.0f;
+        absolutePositionX += 15.0f;
         movingRight = true;
         movingLeft = false;
     }
 
     public void moveLeft()
     {
-        absolutePositionX -= 10.0f;
+        absolutePositionX -= 15.0f;
         movingLeft = true;
         movingRight = false;
     }
@@ -370,19 +383,19 @@ public class Player implements TimeConscious
         float padding = 25.0f;
 
 
-        Rect left = new Rect((int) (x1 - padding), (int) y1, (int) (x1), (int) (y1 + SuperMarioSurfaceView.BLOCKWIDTH));
+        Rect left = new Rect((int) (x1 - (padding)), (int) (y1 - padding), (int) (x1 + padding), (int) (y1 + SuperMarioSurfaceView.BLOCKWIDTH + padding));
         Rect bot = new Rect((int) (x1 - padding), (int) (y1 + SuperMarioSurfaceView.BLOCKWIDTH), (int) (x1 + SuperMarioSurfaceView.BLOCKWIDTH + padding), (int) (y1 + SuperMarioSurfaceView.BLOCKWIDTH + padding));
-        Rect right = new Rect((int) (x1 + SuperMarioSurfaceView.BLOCKWIDTH), (int) y1, (int) (x1 + SuperMarioSurfaceView.BLOCKWIDTH + padding), (int) (y1 + SuperMarioSurfaceView.BLOCKWIDTH));
-        Rect top = new Rect((int) (x1 - padding), (int) (y1 - padding), (int) (x1 + SuperMarioSurfaceView.BLOCKWIDTH + padding), (int) (y1));
+        Rect right = new Rect((int) (x1 + SuperMarioSurfaceView.BLOCKWIDTH - padding), (int) (y1 - padding), (int) (x1 + SuperMarioSurfaceView.BLOCKWIDTH + padding), (int) (y1 + SuperMarioSurfaceView.BLOCKWIDTH + padding));
+        Rect top = new Rect((int) (x1-SuperMarioSurfaceView.BLOCKWIDTH/2), (int) (y1 - padding), (int) (x1 + SuperMarioSurfaceView.BLOCKWIDTH + SuperMarioSurfaceView.BLOCKWIDTH/2), (int) (y1 + padding));
 
         // check for collision in each region
-        if (left.contains((int) (x + SuperMarioSurfaceView.BLOCKWIDTH), (int) (y + SuperMarioSurfaceView.BLOCKWIDTH / 2)))
+        if (left.contains((int) (x + SuperMarioSurfaceView.BLOCKWIDTH), (int) (y + SuperMarioSurfaceView.BLOCKWIDTH / 4)))
         {
             Log.d(SuperMarioSurfaceView.TAG, "Collided with left");
 
             return 3;
         }
-        else if (right.contains((int) (x), (int) (y + SuperMarioSurfaceView.BLOCKWIDTH)))
+        else if (right.contains((int) (x), (int) (y + SuperMarioSurfaceView.BLOCKWIDTH/2)))
         {
             Log.d(SuperMarioSurfaceView.TAG, "Collided with right");
 
@@ -394,7 +407,7 @@ public class Player implements TimeConscious
 
             return 2;
         }
-        else if (top.contains((int) (x + SuperMarioSurfaceView.BLOCKWIDTH / 2), (int) (y + SuperMarioSurfaceView.BLOCKWIDTH)))
+        else if (!onTopOfBlock && top.contains((int) (x + SuperMarioSurfaceView.BLOCKWIDTH / 2), (int) (y + SuperMarioSurfaceView.BLOCKWIDTH)))
         {
             Log.d(SuperMarioSurfaceView.TAG, "Collided with top");
             return 0;
@@ -403,6 +416,8 @@ public class Player implements TimeConscious
         {
             return -1;
         }
+
+
     }
 
 
