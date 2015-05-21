@@ -6,7 +6,7 @@ import android.view.SurfaceHolder;
 public class SuperMarioRenderThread extends Thread
 {
     private final SuperMarioSurfaceView view;
-    private static final int FRAME_PERIOD = 5; // In ms
+    private static final int FRAME_PERIOD = 1; // In ms
 
     public SuperMarioRenderThread(SuperMarioSurfaceView view)
     {

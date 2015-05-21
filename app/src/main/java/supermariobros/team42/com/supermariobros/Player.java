@@ -36,9 +36,16 @@ public class Player implements TimeConscious
 
     }
 
+    public Level getLevel()
+    {
+        return l;
+    }
+
+
     public void tick(Canvas c)
     {
         int col = -1;
+        int eColi = -1;
         boolean collided = false;
 
 
@@ -53,9 +60,26 @@ public class Player implements TimeConscious
             falling = false;
         }
 
+        enemyLoop:
+        // check for collisions with enemies
+        for(Enemy e: l.enemyList)
+        {
+            eColi = collision(e.getX(), e.getY());
+
+            if(eColi == 0)
+            {
+                l.enemyList.remove(e);
+            }
+            else if( eColi > 0)
+            {
+                SuperMarioSurfaceView.gameState = 0;
+
+            }
+
+        }
 
         loop1:
-        // check for collisions
+        // check for collisions with blocks
         for (Block b : l.blockList)
         {
             //check for falling off edge
@@ -205,7 +229,7 @@ public class Player implements TimeConscious
 
         falling = false;
         jumping = true;
-        velocityY = -50.0f;
+        velocityY = -40.0f;
 
 
     }
@@ -229,16 +253,6 @@ public class Player implements TimeConscious
         }
     }
 
-
-    public float getAbsolutePositionX()
-    {
-        return absolutePositionX;
-    }
-
-    public void setAbsolutePositionX(float absolutePositionX)
-    {
-        this.absolutePositionX = absolutePositionX;
-    }
 
     public boolean isOnLeftOfBlock()
     {
@@ -270,35 +284,12 @@ public class Player implements TimeConscious
         this.l = l;
     }
 
-    public float getPadding()
-    {
-        return padding;
-    }
-
-    public void setPadding(float padding)
-    {
-        this.padding = padding;
-    }
 
     public float getY()
     {
         return y;
     }
 
-    public void setY(float y)
-    {
-        this.y = y;
-    }
-
-    public float getVelocityY()
-    {
-        return velocityY;
-    }
-
-    public void setVelocityY(float velocityY)
-    {
-        this.velocityY = velocityY;
-    }
 
     public float getX()
     {
@@ -367,26 +358,17 @@ public class Player implements TimeConscious
         this.onTopOfBlock = onTopOfBlock;
     }
 
-    public boolean isHittingBlockFromBelow()
-    {
-        return hittingBlockFromBelow;
-    }
-
-    public void setHittingBlockFromBelow(boolean hittingBlockFromBelow)
-    {
-        this.hittingBlockFromBelow = hittingBlockFromBelow;
-    }
 
     // returns -1 for no collision, 0 for top collision, 1 for right side, 2 for bottom, 3 for left side
     public int collision(float x1, float y1)
     {
-        float padding = 25.0f;
+        float padding = 30.0f;
 
 
         Rect left = new Rect((int) (x1 - (padding)), (int) (y1 - padding), (int) (x1 + padding), (int) (y1 + SuperMarioSurfaceView.BLOCKWIDTH + padding));
         Rect bot = new Rect((int) (x1 - padding), (int) (y1 + SuperMarioSurfaceView.BLOCKWIDTH), (int) (x1 + SuperMarioSurfaceView.BLOCKWIDTH + padding), (int) (y1 + SuperMarioSurfaceView.BLOCKWIDTH + padding));
         Rect right = new Rect((int) (x1 + SuperMarioSurfaceView.BLOCKWIDTH - padding), (int) (y1 - padding), (int) (x1 + SuperMarioSurfaceView.BLOCKWIDTH + padding), (int) (y1 + SuperMarioSurfaceView.BLOCKWIDTH + padding));
-        Rect top = new Rect((int) (x1-SuperMarioSurfaceView.BLOCKWIDTH/2), (int) (y1 - padding), (int) (x1 + SuperMarioSurfaceView.BLOCKWIDTH + SuperMarioSurfaceView.BLOCKWIDTH/2), (int) (y1 + padding));
+        Rect top = new Rect((int) (x1 - SuperMarioSurfaceView.BLOCKWIDTH / 2), (int) (y1 - padding), (int) (x1 + SuperMarioSurfaceView.BLOCKWIDTH + SuperMarioSurfaceView.BLOCKWIDTH / 2), (int) (y1 + padding));
 
         // check for collision in each region
         if (left.contains((int) (x + SuperMarioSurfaceView.BLOCKWIDTH), (int) (y + SuperMarioSurfaceView.BLOCKWIDTH / 4)))
@@ -395,7 +377,7 @@ public class Player implements TimeConscious
 
             return 3;
         }
-        else if (right.contains((int) (x), (int) (y + SuperMarioSurfaceView.BLOCKWIDTH/2)))
+        else if (right.contains((int) (x), (int) (y + SuperMarioSurfaceView.BLOCKWIDTH / 2)))
         {
             Log.d(SuperMarioSurfaceView.TAG, "Collided with right");
 

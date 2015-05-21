@@ -19,7 +19,10 @@ public class Level1 extends Level
 
         }
 
+        // add enemies
 
+       enemyList.add(new Enemy(1,SuperMarioSurfaceView.WIDTH+5.0f*SuperMarioSurfaceView.BLOCKWIDTH,SuperMarioSurfaceView.GROUNDHEIGHT-SuperMarioSurfaceView.BLOCKWIDTH));
+        //enemyList.add(new Enemy(1, 200, 200));
         // draw first long row of blocks
        for( int i = 0; i < 7; i++)
        {
