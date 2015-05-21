@@ -245,21 +245,12 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
     public boolean onTouchEvent(MotionEvent e)
     {
         int action = e.getActionMasked();
-        int pointerCount = e.getPointerCount();
 
-
-        for (int i = 0; i < pointerCount; i++)
+        switch(action)
         {
-
-            if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_POINTER_DOWN)
-            {
-            /*switch (e.getActionMasked())
-            {*/
-                //case MotionEvent.ACTION_DOWN:
-
-
+            case MotionEvent.ACTION_DOWN:
                 // check if left button is pressed
-                if (leftButtonRect.contains((int) e.getX(i), (int) e.getY(i)))
+                if (leftButtonRect.contains((int) e.getX(), (int) e.getY()))
                 {
                     player.setMovingRight(false);
                     player.setMovingLeft(true);
@@ -267,7 +258,7 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
                     Log.d(TAG, "\nLeft button down");
 
                 }
-                if (rightButtonRect.contains((int) e.getX(i), (int) e.getY(i)))
+                if (rightButtonRect.contains((int) e.getX(), (int) e.getY()))
                 {
                     player.setMovingRight(true);
                     player.setMovingLeft(false);
@@ -275,7 +266,7 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
                     Log.d(TAG, "\nRight button down");
 
                 }
-                if (aButtonRect.contains((int) e.getX(i), (int) e.getY(i)) && !player.isJumping() && !player.isFalling())
+                if (aButtonRect.contains((int) e.getX(), (int) e.getY()) && !player.isJumping() && !player.isFalling())
                 {
                     player.setJumping(true);
                     player.setFalling(false);
@@ -284,46 +275,97 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
 
                     player.jump();
                 }
-                if (bButtonRect.contains((int) e.getX(i), (int) e.getY(i)))
+                if (bButtonRect.contains((int) e.getX(), (int) e.getY()))
                 {
                     //player.action();
                     Log.d(TAG, "\nB button down");
 
                 }
+                break;
 
-
-                //break;
-            }
-            else if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_POINTER_UP)
-            {   //case MotionEvent.ACTION_UP:
-
+            case MotionEvent.ACTION_UP:
                 // check if left button is released
 
-                if (!leftButtonRect.contains((int) e.getX(i), (int) e.getY(i)))
+                if (!leftButtonRect.contains((int) e.getX(), (int) e.getY()))
                 {
                     player.setMovingRight(false);
                     player.setMovingLeft(false);
                     Log.d(TAG, "\nLeft button up");
 
                 }
-                if (!rightButtonRect.contains((int) e.getX(i), (int) e.getY(i)))
+                if (!rightButtonRect.contains((int) e.getX(), (int) e.getY()))
                 {
                     player.setMovingRight(false);
                     player.setMovingLeft(false);
                     Log.d(TAG, "\nRight button up");
 
                 }
-                if (!aButtonRect.contains((int) e.getX(i), (int) e.getY(i)))
+                if (!aButtonRect.contains((int) e.getX(), (int) e.getY()))
                 {
                     player.setJumping(false);
 
 
                 }
-            }
+                break;
+            case MotionEvent.ACTION_POINTER_DOWN:
+                // check if left button is pressed
+                if (leftButtonRect.contains((int) e.getX(1), (int) e.getY(1)))
+                {
+                    player.setMovingRight(false);
+                    player.setMovingLeft(true);
+                    player.setOnLeftOfBlock(false);
+                    Log.d(TAG, "\nLeft button down");
+
+                }
+                if (rightButtonRect.contains((int) e.getX(1), (int) e.getY(1)))
+                {
+                    player.setMovingRight(true);
+                    player.setMovingLeft(false);
+                    player.setOnRightOfBlock(false);
+                    Log.d(TAG, "\nRight button down");
+
+                }
+                if (aButtonRect.contains((int) e.getX(1), (int) e.getY(1)) && !player.isJumping() && !player.isFalling())
+                {
+                    player.setJumping(true);
+                    player.setFalling(false);
+                    player.setOnTopOfBlock(false);
+                    Log.d(TAG, "\nA button down");
+
+                    player.jump();
+                }
+                if (bButtonRect.contains((int) e.getX(1), (int) e.getY(1)))
+                {
+                    //player.action();
+                    Log.d(TAG, "\nB button down");
+
+                }
+                break;
+            case MotionEvent.ACTION_POINTER_UP:
+                if (!leftButtonRect.contains((int) e.getX(1), (int) e.getY(1)))
+                {
+                    player.setMovingRight(false);
+                    player.setMovingLeft(false);
+                    Log.d(TAG, "\nLeft button up");
+
+                }
+                if (!rightButtonRect.contains((int) e.getX(1), (int) e.getY(1)))
+                {
+                    player.setMovingRight(false);
+                    player.setMovingLeft(false);
+                    Log.d(TAG, "\nRight button up");
+
+                }
+                if (!aButtonRect.contains((int) e.getX(1), (int) e.getY(1)))
+                {
+                    player.setJumping(false);
 
 
-            //  break;
+                }
+                break;
         }
+
+
 
 
         return true;
