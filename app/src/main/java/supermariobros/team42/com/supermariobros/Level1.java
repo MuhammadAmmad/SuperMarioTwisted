@@ -30,7 +30,7 @@ public class Level1 extends Level
        }
 
         // powerup block
-        blockList.add(new QuestionBlock(SuperMarioSurfaceView.WIDTH+SuperMarioSurfaceView.BLOCKWIDTH,1.0f/5*SuperMarioSurfaceView.GROUNDHEIGHT,1));
+        blockList.add(new QuestionBlock(8.0f/15*SuperMarioSurfaceView.WIDTH + 7*SuperMarioSurfaceView.BLOCKWIDTH, 3.0f/5*SuperMarioSurfaceView.GROUNDHEIGHT,1));
 
         // draw first boundary block
         blockList.add(new GroundBlock(SuperMarioSurfaceView.WIDTH+4.0f*SuperMarioSurfaceView.BLOCKWIDTH, SuperMarioSurfaceView.GROUNDHEIGHT-SuperMarioSurfaceView.BLOCKWIDTH));

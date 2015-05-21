@@ -49,6 +49,7 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
     private Bitmap mario;
     private Bitmap breakableblock;
     private Bitmap goomba;
+    private Bitmap goldmario;
 
     // rectangles
     Rect dst = new Rect();
@@ -89,7 +90,7 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
         rightButtonRect = new Rect((int) (1.0f / 5 * WIDTH), (int) (4.0f / 5 * HEIGHT), (int) (2.0f / 5 * WIDTH), (int) HEIGHT);
         bButtonRect = new Rect((int) (5.5f / 8 * WIDTH), (int) (4.0f / 5 * HEIGHT), (int) (6.5f / 8 * WIDTH), (int) HEIGHT);
         aButtonRect = new Rect((int) (7.0f / 8 * WIDTH), (int) (4.0f / 5 * HEIGHT), (int) (WIDTH), (int) HEIGHT);
-        marioRect = new Rect((int) player.getX(), (int) player.getY(), (int) (player.getX() + BLOCKWIDTH), (int) (GROUNDHEIGHT));
+        marioRect = new Rect((int) player.getX(), (int) player.getY(), (int) (player.getX() + BLOCKWIDTH), (int) (player.getY() + BLOCKWIDTH));
 
         // decode bitmaps
         beemush = BitmapFactory.decodeResource(getResources(), R.drawable.beemush, options);
@@ -105,6 +106,7 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
         bbutton = BitmapFactory.decodeResource(getResources(), R.drawable.bbutton, options);
         mario = BitmapFactory.decodeResource(getResources(), R.drawable.mario, options);
         breakableblock = BitmapFactory.decodeResource(getResources(), R.drawable.breakableblock, options);
+        goldmario = BitmapFactory.decodeResource(getResources(), R.drawable.goldmario, options);
 
     }
 
@@ -158,7 +160,16 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
                         }
                         else if (b instanceof QuestionBlock)
                         {
-                            c.drawBitmap(questionblock, null, dst, paint);
+                            if(((QuestionBlock)b).getUsed() )
+                            {
+                                c.drawBitmap(blockused, null, dst, paint);
+
+                            }
+                            else
+                            {
+                                c.drawBitmap(questionblock, null, dst, paint);
+
+                            }
                         }
                         else if (b instanceof GroundBlock)
                         {
@@ -204,7 +215,24 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
 
                 // draw mario
 
-                c.drawBitmap(mario, null, marioRect, paint);
+                if(player.timer < 400)
+                {
+                    paint.setAlpha(150);
+                }
+                else
+                {
+                    paint.setAlpha(255);
+                }
+
+                if(player.getSize() == 1)
+                {
+                    c.drawBitmap(goldmario, null, marioRect, paint);
+
+                }
+                else
+                {
+                    c.drawBitmap(mario, null, marioRect, paint);
+                }
                 break;
 
 
@@ -286,14 +314,14 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
             case MotionEvent.ACTION_UP:
                 // check if left button is released
 
-                if (!leftButtonRect.contains((int) e.getX(), (int) e.getY()))
+                if (!leftButtonRect.contains((int) e.getX(), (int) e.getY()) && !aButtonRect.contains((int) e.getX(), (int) e.getY()))
                 {
                     player.setMovingRight(false);
                     player.setMovingLeft(false);
                     Log.d(TAG, "\nLeft button up");
 
                 }
-                if (!rightButtonRect.contains((int) e.getX(), (int) e.getY()))
+                if (!rightButtonRect.contains((int) e.getX(), (int) e.getY()) && !aButtonRect.contains((int) e.getX(), (int) e.getY()))
                 {
                     player.setMovingRight(false);
                     player.setMovingLeft(false);
@@ -302,7 +330,7 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
                 }
                 if (!aButtonRect.contains((int) e.getX(), (int) e.getY()))
                 {
-                    player.setJumping(false);
+                    //player.setJumping(false);
 
 
                 }
@@ -342,23 +370,23 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
                 }
                 break;
             case MotionEvent.ACTION_POINTER_UP:
-                if (!leftButtonRect.contains((int) e.getX(1), (int) e.getY(1)))
+                if (!leftButtonRect.contains((int) e.getX(0), (int) e.getY(0)))
                 {
-                    player.setMovingRight(false);
+                  //  player.setMovingRight(false);
                     player.setMovingLeft(false);
                     Log.d(TAG, "\nLeft button up");
 
                 }
-                if (!rightButtonRect.contains((int) e.getX(1), (int) e.getY(1)))
+                if (!rightButtonRect.contains((int) e.getX(0), (int) e.getY(0)))
                 {
                     player.setMovingRight(false);
-                    player.setMovingLeft(false);
+                  //  player.setMovingLeft(false);
                     Log.d(TAG, "\nRight button up");
 
                 }
                 if (!aButtonRect.contains((int) e.getX(1), (int) e.getY(1)))
                 {
-                    player.setJumping(false);
+                    //player.setJumping(false);
 
 
                 }

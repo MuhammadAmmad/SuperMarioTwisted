@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 public class QuestionBlock extends Block
 {
     private int item; // 0 for coin, 1 for fireflower, 2 for iceflower
+    private boolean used;
 
     public QuestionBlock(float x, float y, int item)
     {
@@ -21,5 +22,15 @@ public class QuestionBlock extends Block
     public void tick(Canvas c)
     {
         move();
+    }
+
+    public boolean getUsed()
+    {
+        return used;
+    }
+
+    public void setUsed()
+    {
+        used = true;
     }
 }

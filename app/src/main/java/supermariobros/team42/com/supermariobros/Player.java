@@ -12,7 +12,6 @@ public class Player implements TimeConscious
     private float velocityY;
     private float y;
     private final float x;
-    private float absolutePositionX; // used to check if mario has reached edges of screen
     private boolean movingRight;
     private boolean movingLeft;
     public static boolean onLeftOfBlock;
@@ -22,16 +21,16 @@ public class Player implements TimeConscious
     private boolean hittingBlockFromBelow;
     private boolean falling;
     private boolean jumping;
+    public int timer = 201;
     private boolean alive = true;
     private float padding = 5.0f;
     private Level l;
-
+    private int size = 0; // 0 for small, 1 for big
 
     public Player(Level l)
     {
         x = SuperMarioSurfaceView.WIDTH / 2 - SuperMarioSurfaceView.BLOCKWIDTH;
         y = SuperMarioSurfaceView.GROUNDHEIGHT - SuperMarioSurfaceView.BLOCKWIDTH;
-        absolutePositionX = x;
         this.l = l;
 
     }
@@ -46,8 +45,12 @@ public class Player implements TimeConscious
     {
         int col = -1;
         int eColi = -1;
-        boolean collided = false;
+        timer++;
 
+        if(timer > 201)
+        {
+            timer = 201;
+        }
 
         if (velocityY > 0.0f)
         {
@@ -72,7 +75,15 @@ public class Player implements TimeConscious
             }
             else if( eColi > 0)
             {
-                SuperMarioSurfaceView.gameState = 0;
+                if(size == 0 && timer > 200)
+                {
+                    SuperMarioSurfaceView.gameState = 0;
+                }
+                else if (size == 1 && timer > 200)
+                {
+                    size--; // make mario shrink
+                    timer = 0; // make mario invincible
+                }
 
             }
 
@@ -143,6 +154,18 @@ public class Player implements TimeConscious
                             falling = true;
                             hittingBlockFromBelow = true;
 
+                            if(b instanceof BreakableBlock)
+                            {
+                                l.blockList.remove(b);
+                            }
+                            else if (b instanceof QuestionBlock && !((QuestionBlock) b).getUsed())
+                            {
+                                ((QuestionBlock) b).setUsed();
+                                size++;
+                            }
+
+
+
                         }
                         break loop1;
 
@@ -212,14 +235,12 @@ public class Player implements TimeConscious
 
     public void moveRight()
     {
-        absolutePositionX += 15.0f;
         movingRight = true;
         movingLeft = false;
     }
 
     public void moveLeft()
     {
-        absolutePositionX -= 15.0f;
         movingLeft = true;
         movingRight = false;
     }
@@ -274,15 +295,7 @@ public class Player implements TimeConscious
         this.onRightOfBlock = onRightOfBlock;
     }
 
-    public Level getL()
-    {
-        return l;
-    }
 
-    public void setL(Level l)
-    {
-        this.l = l;
-    }
 
 
     public float getY()
@@ -294,6 +307,11 @@ public class Player implements TimeConscious
     public float getX()
     {
         return x;
+    }
+
+    public void setY(float y)
+    {
+        this.y = y;
     }
 
 
@@ -400,6 +418,11 @@ public class Player implements TimeConscious
         }
 
 
+    }
+
+    public int getSize()
+    {
+        return size;
     }
 
 
