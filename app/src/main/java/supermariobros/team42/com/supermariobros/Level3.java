@@ -89,5 +89,8 @@ public class Level3 extends Level {
 
         flag.setX(SuperMarioSurfaceView.WIDTH * 4.0f + (4f / 5.0f) * SuperMarioSurfaceView.WIDTH);
         flag.setY(SuperMarioSurfaceView.GROUNDHEIGHT);
+
+        flag.getFlag().set((int) (SuperMarioSurfaceView.WIDTH * 4.0f + (4f / 5.0f) * SuperMarioSurfaceView.WIDTH), 0, (int) (SuperMarioSurfaceView.WIDTH * 4.0f + (4f / 5.0f) * SuperMarioSurfaceView.WIDTH + SuperMarioSurfaceView.BLOCKWIDTH), (int) SuperMarioSurfaceView.GROUNDHEIGHT);
+
     }
 }

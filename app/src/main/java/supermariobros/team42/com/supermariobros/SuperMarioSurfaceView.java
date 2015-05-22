@@ -249,7 +249,7 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
 
                 // draw mario
 
-                if(player.timer < 400)
+                if(player.timer < 200)
                 {
                     paint.setAlpha(150);
                 }
@@ -346,7 +346,7 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
 
                 // draw mario
 
-                if(player.timer < 400)
+                if(player.timer < 200)
                 {
                     paint.setAlpha(150);
                 }
@@ -443,7 +443,7 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
 
                 // draw mario
 
-                if(player.timer < 400)
+                if(player.timer < 200)
                 {
                     paint.setAlpha(150);
                 }

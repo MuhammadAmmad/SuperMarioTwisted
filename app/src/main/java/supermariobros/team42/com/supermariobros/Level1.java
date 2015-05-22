@@ -57,5 +57,7 @@ public class Level1 extends Level
         flag.setX(SuperMarioSurfaceView.WIDTH * 3.0f + (2f / 5.0f) * SuperMarioSurfaceView.WIDTH);
         flag.setY(SuperMarioSurfaceView.GROUNDHEIGHT);
 
+        flag.getFlag().set((int) (SuperMarioSurfaceView.WIDTH * 3.0f + (2f / 5.0f) * SuperMarioSurfaceView.WIDTH), 0, (int) (SuperMarioSurfaceView.WIDTH * 3.0f + (2f / 5.0f) * SuperMarioSurfaceView.WIDTH + SuperMarioSurfaceView.BLOCKWIDTH), (int) SuperMarioSurfaceView.GROUNDHEIGHT);
+
     }
 }

@@ -21,7 +21,7 @@ public class Player implements TimeConscious
     private boolean hittingBlockFromBelow;
     private boolean falling;
     private boolean jumping;
-    public int timer = 201;
+    public int timer = 200;
     private boolean alive = true;
     private float padding = 5.0f;
     private Level l;
@@ -47,7 +47,7 @@ public class Player implements TimeConscious
         int eColi = -1;
         timer++;
 
-        if(timer > 201)
+        if(timer > 200)
         {
             timer = 201;
         }
@@ -158,7 +158,7 @@ public class Player implements TimeConscious
                             {
                                 l.blockList.remove(b);
                             }
-                            else if (b instanceof QuestionBlock && !((QuestionBlock) b).getUsed())
+                            else if (b instanceof QuestionBlock && !((QuestionBlock) b).getUsed() && size == 0)
                             {
                                 ((QuestionBlock) b).setUsed();
                                 size++;
@@ -201,7 +201,11 @@ public class Player implements TimeConscious
 
         } // end for
 
-
+        // check for flag collision
+        if(x+SuperMarioSurfaceView.BLOCKWIDTH >= l.flag.getX())
+        {
+            SuperMarioSurfaceView.gameState = -1; // level completed
+        }
         // check for vertical collision
         if (falling || jumping)
         {
