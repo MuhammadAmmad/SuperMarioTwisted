@@ -12,8 +12,8 @@ public class Enemy implements TimeConscious
 
     private float y;
     private float x;
-    private boolean movingRight = true;
-    private boolean movingLeft;
+    private boolean movingRight;
+    private boolean movingLeft = true;
     public static boolean onLeftOfBlock;
     public static boolean onRightOfBlock;
 
