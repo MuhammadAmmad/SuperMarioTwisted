@@ -63,6 +63,11 @@ public class Player implements TimeConscious
             falling = false;
         }
 
+        if(onTopOfBlock)
+        {
+            falling = false;
+        }
+
         enemyLoop:
         // check for collisions with enemies
         for (Enemy e : l.enemyList)
@@ -212,12 +217,12 @@ public class Player implements TimeConscious
             y += velocityY;
         }
 
-        if (col != 3)
+        if (col != 3 && !onTopOfBlock )
         {
             onLeftOfBlock = false;
         }
 
-        if (col != 1)
+        if (col != 1 && !onTopOfBlock)
         {
             onRightOfBlock = false;
         }
@@ -351,7 +356,7 @@ public class Player implements TimeConscious
         Rect top = new Rect((int) (x1 - SuperMarioSurfaceView.BLOCKWIDTH / 2), (int) (y1 - padding), (int) (x1 + SuperMarioSurfaceView.BLOCKWIDTH + SuperMarioSurfaceView.BLOCKWIDTH / 2), (int) (y1 + padding));
 
         // check for collision in each region
-        if (left.contains((int) (x + SuperMarioSurfaceView.BLOCKWIDTH), (int) (y + SuperMarioSurfaceView.BLOCKWIDTH / 4)))
+        if (left.contains((int) (x + SuperMarioSurfaceView.BLOCKWIDTH), (int) (y + SuperMarioSurfaceView.BLOCKWIDTH / 2)))
         {
             Log.d(SuperMarioSurfaceView.TAG, "Collided with left");
 
