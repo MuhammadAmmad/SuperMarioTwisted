@@ -67,13 +67,13 @@ public class Enemy implements TimeConscious
         int eColi = -1;
 
 
-        if(movingRight)
+        if (movingRight)
         {
-            if( SuperMarioSurfaceView.player.isMovingLeft())
+            if (SuperMarioSurfaceView.player.isMovingLeft())
             {
                 x += 13.0f;
             }
-            else if(SuperMarioSurfaceView.player.isMovingRight())
+            else if (SuperMarioSurfaceView.player.isMovingRight())
             {
                 x += -7.0f;
 
@@ -85,11 +85,11 @@ public class Enemy implements TimeConscious
         }
         else if (movingLeft)
         {
-            if( SuperMarioSurfaceView.player.isMovingLeft())
+            if (SuperMarioSurfaceView.player.isMovingLeft())
             {
                 x += 7.0f;
             }
-            else if(SuperMarioSurfaceView.player.isMovingRight())
+            else if (SuperMarioSurfaceView.player.isMovingRight())
             {
                 x += -13.0f;
 
@@ -102,13 +102,12 @@ public class Enemy implements TimeConscious
         }
 
 
-
         enemyLoop:
-        for(Block b: SuperMarioSurfaceView.player.getLevel().blockList)
+        for (Block b : SuperMarioSurfaceView.player.getLevel().blockList)
         {
             eColi = collision(b.getX(), b.getY());
 
-            switch(eColi)
+            switch (eColi)
             {
                 case 1:
                     // enemy is colliding with right side of block
@@ -121,7 +120,6 @@ public class Enemy implements TimeConscious
                     movingRight = false;
                     movingLeft = true;
                     break enemyLoop;
-
 
 
             }

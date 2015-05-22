@@ -1,7 +1,6 @@
 package supermariobros.team42.com.supermariobros;
 
 import android.graphics.Canvas;
-import android.graphics.Rect;
 
 /**
  * Created by Daniel on 5/13/2015.
@@ -10,7 +9,6 @@ public class Flag implements TimeConscious
 {
     private float x;
 
-    private Rect flagRect = new Rect();
 
 
     private float y;
@@ -60,9 +58,6 @@ public class Flag implements TimeConscious
         }
     }
 
-    public Rect getFlag()
-    {
-        return flagRect;
-    }
+
 
 }

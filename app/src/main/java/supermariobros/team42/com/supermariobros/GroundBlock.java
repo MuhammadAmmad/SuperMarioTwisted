@@ -10,14 +10,14 @@ public class GroundBlock extends Block
 
     public GroundBlock(float x, float y)
     {
-        super(x,y);
+        super(x, y);
         typeOfBlock = 2;
     }
 
     public void tick(Canvas c)
     {
 
-            move();
+        move();
 
     }
 }

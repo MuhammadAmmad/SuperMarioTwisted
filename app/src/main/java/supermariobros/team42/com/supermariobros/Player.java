@@ -47,7 +47,7 @@ public class Player implements TimeConscious
         int eColi = -1;
         timer++;
 
-        if(timer > 200)
+        if (timer > 200)
         {
             timer = 201;
         }
@@ -65,17 +65,17 @@ public class Player implements TimeConscious
 
         enemyLoop:
         // check for collisions with enemies
-        for(Enemy e: l.enemyList)
+        for (Enemy e : l.enemyList)
         {
             eColi = collision(e.getX(), e.getY());
 
-            if(eColi == 0)
+            if (eColi == 0)
             {
                 l.enemyList.remove(e);
             }
-            else if( eColi > 0)
+            else if (eColi > 0)
             {
-                if(size == 0 && timer > 200)
+                if (size == 0 && timer > 200)
                 {
                     SuperMarioSurfaceView.gameState = -1;
                 }
@@ -154,7 +154,7 @@ public class Player implements TimeConscious
                             falling = true;
                             hittingBlockFromBelow = true;
 
-                            if(b instanceof BreakableBlock)
+                            if (b instanceof BreakableBlock)
                             {
                                 l.blockList.remove(b);
                             }
@@ -163,7 +163,6 @@ public class Player implements TimeConscious
                                 ((QuestionBlock) b).setUsed();
                                 size++;
                             }
-
 
 
                         }
@@ -202,7 +201,7 @@ public class Player implements TimeConscious
         } // end for
 
         // check for flag collision
-        if(x+SuperMarioSurfaceView.BLOCKWIDTH >= l.flag.getX())
+        if (x + SuperMarioSurfaceView.BLOCKWIDTH >= l.flag.getX())
         {
             SuperMarioSurfaceView.gameState = -1; // level completed
         }
@@ -237,17 +236,6 @@ public class Player implements TimeConscious
     }
 
 
-    public void moveRight()
-    {
-        movingRight = true;
-        movingLeft = false;
-    }
-
-    public void moveLeft()
-    {
-        movingLeft = true;
-        movingRight = false;
-    }
 
     public void jump()
     {
@@ -279,27 +267,16 @@ public class Player implements TimeConscious
     }
 
 
-    public boolean isOnLeftOfBlock()
-    {
-        return onLeftOfBlock;
-    }
-
     public void setOnLeftOfBlock(boolean onLeftOfBlock)
     {
         this.onLeftOfBlock = onLeftOfBlock;
     }
 
-    public boolean isOnRightOfBlock()
-    {
-        return onRightOfBlock;
-    }
 
     public void setOnRightOfBlock(boolean onRightOfBlock)
     {
         this.onRightOfBlock = onRightOfBlock;
     }
-
-
 
 
     public float getY()
@@ -311,11 +288,6 @@ public class Player implements TimeConscious
     public float getX()
     {
         return x;
-    }
-
-    public void setY(float y)
-    {
-        this.y = y;
     }
 
 
@@ -339,15 +311,6 @@ public class Player implements TimeConscious
         this.jumping = jumping;
     }
 
-    public boolean isAlive()
-    {
-        return alive;
-    }
-
-    public void setAlive(boolean alive)
-    {
-        this.alive = alive;
-    }
 
     public boolean isMovingRight()
     {
@@ -370,11 +333,6 @@ public class Player implements TimeConscious
     }
 
 
-    public boolean isOnTopOfBlock()
-    {
-        return onTopOfBlock;
-    }
-
     public void setOnTopOfBlock(boolean onTopOfBlock)
     {
         this.onTopOfBlock = onTopOfBlock;
@@ -388,7 +346,7 @@ public class Player implements TimeConscious
 
 
         Rect left = new Rect((int) (x1 - (padding)), (int) (y1 - padding), (int) (x1 + padding), (int) (y1 + SuperMarioSurfaceView.BLOCKWIDTH + padding));
-        Rect bot = new Rect((int) (x1 - padding), (int) (y1 + SuperMarioSurfaceView.BLOCKWIDTH/2), (int) (x1 + SuperMarioSurfaceView.BLOCKWIDTH + padding), (int) (y1 + SuperMarioSurfaceView.BLOCKWIDTH + padding));
+        Rect bot = new Rect((int) (x1 - padding), (int) (y1 + SuperMarioSurfaceView.BLOCKWIDTH / 2), (int) (x1 + SuperMarioSurfaceView.BLOCKWIDTH + padding), (int) (y1 + SuperMarioSurfaceView.BLOCKWIDTH + padding));
         Rect right = new Rect((int) (x1 + SuperMarioSurfaceView.BLOCKWIDTH - padding), (int) (y1 - padding), (int) (x1 + SuperMarioSurfaceView.BLOCKWIDTH + padding), (int) (y1 + SuperMarioSurfaceView.BLOCKWIDTH + padding));
         Rect top = new Rect((int) (x1 - SuperMarioSurfaceView.BLOCKWIDTH / 2), (int) (y1 - padding), (int) (x1 + SuperMarioSurfaceView.BLOCKWIDTH + SuperMarioSurfaceView.BLOCKWIDTH / 2), (int) (y1 + padding));
 

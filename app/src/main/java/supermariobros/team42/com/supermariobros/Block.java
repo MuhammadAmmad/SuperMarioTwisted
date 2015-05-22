@@ -8,7 +8,6 @@ public abstract class Block implements TimeConscious
     private float x; // top left corner
     private float y;
     protected int typeOfBlock;
-
     private float width;
     private float velocity;
 
@@ -64,11 +63,11 @@ public abstract class Block implements TimeConscious
     {
 
         // blocks move opposite of mario
-        if (SuperMarioSurfaceView.player.isMovingLeft() && !Player.onRightOfBlock  )
+        if (SuperMarioSurfaceView.player.isMovingLeft() && !Player.onRightOfBlock)
         {
             setX(getX() + 10.0f);
         }
-        else if (SuperMarioSurfaceView.player.isMovingRight() && !Player.onLeftOfBlock )
+        else if (SuperMarioSurfaceView.player.isMovingRight() && !Player.onLeftOfBlock)
         {
             setX(getX() - 10.0f);
         }
