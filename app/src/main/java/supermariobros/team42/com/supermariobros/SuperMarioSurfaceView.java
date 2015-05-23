@@ -35,6 +35,7 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
     private ArrayList<Bitmap> marioWalk = new ArrayList<Bitmap>();
 
 
+
     BitmapFactory.Options options = new BitmapFactory.Options();
 
     // bitmaps
@@ -65,6 +66,7 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
     Rect aButtonRect;
     Rect bButtonRect;
     Rect marioRect;
+    Rect bigMarioRect;
     Rect enemyRect;
     Rect L1but, L2but, L3but;
 
@@ -99,6 +101,7 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
         bButtonRect = new Rect((int) (5.5f / 8 * WIDTH), (int) (4.0f / 5 * HEIGHT), (int) (6.5f / 8 * WIDTH), (int) HEIGHT);
         aButtonRect = new Rect((int) (7.0f / 8 * WIDTH), (int) (4.0f / 5 * HEIGHT), (int) (WIDTH), (int) HEIGHT);
         marioRect = new Rect((int) player.getX(), (int) player.getY(), (int) (player.getX() + BLOCKWIDTH), (int) (player.getY() + BLOCKWIDTH));
+        bigMarioRect = new Rect();
         L1but = new Rect((int) (1.0f/4 * WIDTH),(int) (0.0f/8 * HEIGHT), (int) (3.0f/4 * WIDTH), (int) (2.0f/8 * HEIGHT));
         L2but = new Rect((int) (1.0f/4 * WIDTH),(int) (3.0f/8 * HEIGHT), (int) (3.0f/4 * WIDTH), (int) (5.0f/8 * HEIGHT));
         L3but = new Rect((int) (1.0f/4 * WIDTH),(int) (6.0f/8 * HEIGHT), (int) (3.0f/4 * WIDTH), (int) (8.0f/8 * HEIGHT));
@@ -249,7 +252,7 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
 
                 // draw mario
 
-                if(player.timer < 200)
+                if(player.isSafe())
                 {
                     paint.setAlpha(150);
                 }
@@ -258,14 +261,23 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
                     paint.setAlpha(255);
                 }
 
-                if(player.getSize() == 1)
+                if(player.getSize() == 1 && !player.isInvincible())
                 {
-                    c.drawBitmap(goldmario, null, marioRect, paint);
+                    c.drawBitmap(mario, null, bigMarioRect, paint);
 
                 }
-                else
+                else if(player.getSize() == 1 && player.isInvincible())
+                {
+                    c.drawBitmap(goldmario, null, bigMarioRect, paint);
+                }
+                else if(player.getSize() == 0 && player.isInvincible())
+                {
+                    c.drawBitmap(goldmario, null, marioRect, paint);
+                }
+                else if(player.getSize() == 0 && !player.isInvincible())
                 {
                     c.drawBitmap(mario, null, marioRect, paint);
+
                 }
                 break;
 
@@ -346,7 +358,7 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
 
                 // draw mario
 
-                if(player.timer < 200)
+                if(player.isSafe())
                 {
                     paint.setAlpha(150);
                 }
@@ -355,14 +367,23 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
                     paint.setAlpha(255);
                 }
 
-                if(player.getSize() == 1)
+                if(player.getSize() == 1 && !player.isInvincible())
                 {
-                    c.drawBitmap(goldmario, null, marioRect, paint);
+                    c.drawBitmap(mario, null, bigMarioRect, paint);
 
                 }
-                else
+                else if(player.getSize() == 1 && player.isInvincible())
+                {
+                    c.drawBitmap(goldmario, null, bigMarioRect, paint);
+                }
+                else if(player.getSize() == 0 && player.isInvincible())
+                {
+                    c.drawBitmap(goldmario, null, marioRect, paint);
+                }
+                else if(player.getSize() == 0 && !player.isInvincible())
                 {
                     c.drawBitmap(mario, null, marioRect, paint);
+
                 }
                 break;
 
@@ -443,7 +464,7 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
 
                 // draw mario
 
-                if(player.timer < 200)
+                if(player.isSafe())
                 {
                     paint.setAlpha(150);
                 }
@@ -452,14 +473,23 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
                     paint.setAlpha(255);
                 }
 
-                if(player.getSize() == 1)
+                if(player.getSize() == 1 && !player.isInvincible())
                 {
-                    c.drawBitmap(goldmario, null, marioRect, paint);
+                    c.drawBitmap(mario, null, bigMarioRect, paint);
 
                 }
-                else
+                else if(player.getSize() == 1 && player.isInvincible())
+                {
+                    c.drawBitmap(goldmario, null, bigMarioRect, paint);
+                }
+                else if(player.getSize() == 0 && player.isInvincible())
+                {
+                    c.drawBitmap(goldmario, null, marioRect, paint);
+                }
+                else if(player.getSize() == 0 && !player.isInvincible())
                 {
                     c.drawBitmap(mario, null, marioRect, paint);
+
                 }
                 break;
         }
@@ -535,7 +565,7 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
 
 
         marioRect.set((int) player.getX(), (int) player.getY(), (int) (player.getX() + BLOCKWIDTH), (int) (player.getY() + BLOCKWIDTH));
-
+        bigMarioRect.set((int) (player.getX()-20.0f), (int) (player.getY() - 20.0f), (int) (player.getX() + BLOCKWIDTH + 20.0f), (int) (player.getY() + BLOCKWIDTH + 20.0f));
         renderGame(c);
     }
 

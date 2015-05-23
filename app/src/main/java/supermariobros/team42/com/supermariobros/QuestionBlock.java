@@ -7,7 +7,7 @@ import android.graphics.Canvas;
  */
 public class QuestionBlock extends Block
 {
-    private int item; // 0 for coin, 1 for fireflower, 2 for iceflower
+    private int item; // 1 for mushroom, 2 for invincible
     private boolean used;
 
     public QuestionBlock(float x, float y, int item)
@@ -32,5 +32,10 @@ public class QuestionBlock extends Block
     public void setUsed()
     {
         used = true;
+    }
+
+    public int getType()
+    {
+        return item;
     }
 }

@@ -4,6 +4,9 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.util.Log;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * Created by Daniel on 5/11/2015.
  */
@@ -16,7 +19,8 @@ public class Player implements TimeConscious
     private boolean movingLeft;
     public static boolean onLeftOfBlock;
     public static boolean onRightOfBlock;
-
+    private boolean invincible;
+    private boolean safe = false;
     private boolean onTopOfBlock;
     private boolean hittingBlockFromBelow;
     private boolean falling;
@@ -26,12 +30,21 @@ public class Player implements TimeConscious
     private float padding = 5.0f;
     private Level l;
     private int size = 0; // 0 for small, 1 for big
+    private TimerTask inTask;
+    private TimerTask safeTask;
+    private Timer pTimer = new Timer("powertimer");
 
     public Player(Level l)
     {
         x = SuperMarioSurfaceView.WIDTH / 2 - SuperMarioSurfaceView.BLOCKWIDTH;
         y = SuperMarioSurfaceView.GROUNDHEIGHT - SuperMarioSurfaceView.BLOCKWIDTH;
         this.l = l;
+
+
+
+
+
+
 
     }
 
@@ -45,12 +58,7 @@ public class Player implements TimeConscious
     {
         int col = -1;
         int eColi = -1;
-        timer++;
 
-        if (timer > 200)
-        {
-            timer = 201;
-        }
 
         if (velocityY > 0.0f)
         {
@@ -63,7 +71,7 @@ public class Player implements TimeConscious
             falling = false;
         }
 
-        if(onTopOfBlock)
+        if (onTopOfBlock)
         {
             falling = false;
         }
@@ -74,20 +82,30 @@ public class Player implements TimeConscious
         {
             eColi = collision(e.getX(), e.getY());
 
-            if (eColi == 0)
+            if ((eColi == 0 && !safe) || (eColi > 0 && invincible))
             {
                 l.enemyList.remove(e);
             }
-            else if (eColi > 0)
+            else if (eColi > 0 && !safe)
             {
-                if (size == 0 && timer > 200)
+                if (size == 0 )
                 {
                     SuperMarioSurfaceView.gameState = -1;
                 }
-                else if (size == 1 && timer > 200)
+                else if (size == 1 )
                 {
                     size--; // make mario shrink
-                    timer = 0; // make mario invincible
+                    safe = true;
+                    safeTask = new TimerTask()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            safe = false;
+                        }
+                    };
+                    pTimer.schedule(safeTask, 3000);
+
                 }
 
             }
@@ -163,10 +181,25 @@ public class Player implements TimeConscious
                             {
                                 l.blockList.remove(b);
                             }
-                            else if (b instanceof QuestionBlock && !((QuestionBlock) b).getUsed() && size == 0)
+                            else if (b instanceof QuestionBlock && !((QuestionBlock) b).getUsed() && size == 0 && ((QuestionBlock) b).getType() == 1)
                             {
                                 ((QuestionBlock) b).setUsed();
                                 size++;
+                            }
+                            else if (b instanceof QuestionBlock && !((QuestionBlock) b).getUsed() && ((QuestionBlock) b).getType() == 2)
+                            {
+                                ((QuestionBlock) b).setUsed();
+                                invincible = true;
+                                inTask = new TimerTask()
+                                {
+                                    @Override
+                                    public void run()
+                                    {
+                                        invincible = false;
+                                    }
+                                };
+                                pTimer.schedule(inTask, 3000);
+
                             }
 
 
@@ -217,7 +250,7 @@ public class Player implements TimeConscious
             y += velocityY;
         }
 
-        if (col != 3 && !onTopOfBlock )
+        if (col != 3 && !onTopOfBlock)
         {
             onLeftOfBlock = false;
         }
@@ -239,7 +272,6 @@ public class Player implements TimeConscious
 
 
     }
-
 
 
     public void jump()
@@ -392,5 +424,14 @@ public class Player implements TimeConscious
         return size;
     }
 
+    public boolean isInvincible()
+    {
+        return invincible;
+    }
+
+    public boolean isSafe()
+    {
+        return safe;
+    }
 
 }

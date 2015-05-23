@@ -58,8 +58,8 @@ public class Level2 extends Level {
         blockList.add(new GroundBlock(3.0f*SuperMarioSurfaceView.WIDTH + 8*SuperMarioSurfaceView.BLOCKWIDTH , SuperMarioSurfaceView.GROUNDHEIGHT-3.0f*SuperMarioSurfaceView.BLOCKWIDTH));
 
         //question blocks
-        blockList.add(new QuestionBlock(SuperMarioSurfaceView.WIDTH + 11*SuperMarioSurfaceView.BLOCKWIDTH, 1.0f/5*SuperMarioSurfaceView.GROUNDHEIGHT,1));
-        blockList.add(new QuestionBlock(3*SuperMarioSurfaceView.WIDTH - SuperMarioSurfaceView.BLOCKWIDTH, 1.0f/5*SuperMarioSurfaceView.GROUNDHEIGHT,1));
+        blockList.add(new QuestionBlock(SuperMarioSurfaceView.WIDTH + 11*SuperMarioSurfaceView.BLOCKWIDTH, 1.0f/5*SuperMarioSurfaceView.GROUNDHEIGHT,2));
+        blockList.add(new QuestionBlock(3*SuperMarioSurfaceView.WIDTH - SuperMarioSurfaceView.BLOCKWIDTH, 1.0f/5*SuperMarioSurfaceView.GROUNDHEIGHT,2));
 
 
 
