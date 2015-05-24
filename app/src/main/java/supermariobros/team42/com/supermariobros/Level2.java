@@ -69,7 +69,7 @@ public class Level2 extends Level {
         {
             enemyList.add(new Enemy(1,2*SuperMarioSurfaceView.WIDTH+4.0f*i*SuperMarioSurfaceView.BLOCKWIDTH,SuperMarioSurfaceView.GROUNDHEIGHT-SuperMarioSurfaceView.BLOCKWIDTH));
         }
-        enemyList.add(new Enemy(1,3*SuperMarioSurfaceView.WIDTH+4.0f*SuperMarioSurfaceView.BLOCKWIDTH,SuperMarioSurfaceView.GROUNDHEIGHT-SuperMarioSurfaceView.BLOCKWIDTH));
+        enemyList.add(new Enemy(2,3*SuperMarioSurfaceView.WIDTH+4.0f*SuperMarioSurfaceView.BLOCKWIDTH,SuperMarioSurfaceView.GROUNDHEIGHT-SuperMarioSurfaceView.BLOCKWIDTH));
 
 
         // draw flag

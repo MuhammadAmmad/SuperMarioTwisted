@@ -21,7 +21,7 @@ public class Enemy implements TimeConscious
     private float padding = 5.0f;
 
 
-    private int type; // 1 for koopa, 2 for goomba
+    private int type; // 1 for goomba, 2 for koopa
 
     public Enemy(int type, float x, float y)
     {

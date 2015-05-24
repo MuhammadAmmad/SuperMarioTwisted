@@ -21,13 +21,15 @@ public class Level1 extends Level
 
         // add enemies
 
-       enemyList.add(new Enemy(1,SuperMarioSurfaceView.WIDTH+5.0f*SuperMarioSurfaceView.BLOCKWIDTH,SuperMarioSurfaceView.GROUNDHEIGHT-SuperMarioSurfaceView.BLOCKWIDTH));
+        enemyList.add(new Enemy(1,SuperMarioSurfaceView.WIDTH+5.0f*SuperMarioSurfaceView.BLOCKWIDTH,SuperMarioSurfaceView.GROUNDHEIGHT-SuperMarioSurfaceView.BLOCKWIDTH));
+        enemyList.add(new Enemy(2,2*SuperMarioSurfaceView.WIDTH+5.0f*SuperMarioSurfaceView.BLOCKWIDTH,SuperMarioSurfaceView.GROUNDHEIGHT-SuperMarioSurfaceView.BLOCKWIDTH));
+
         //enemyList.add(new Enemy(1, 200, 200));
         // draw first long row of blocks
-       for( int i = 0; i < 7; i++)
-       {
-           blockList.add(new BreakableBlock(8.0f/15*SuperMarioSurfaceView.WIDTH + i*SuperMarioSurfaceView.BLOCKWIDTH, 3.0f/5*SuperMarioSurfaceView.GROUNDHEIGHT));
-       }
+        for( int i = 0; i < 7; i++)
+        {
+            blockList.add(new BreakableBlock(8.0f/15*SuperMarioSurfaceView.WIDTH + i*SuperMarioSurfaceView.BLOCKWIDTH, 3.0f/5*SuperMarioSurfaceView.GROUNDHEIGHT));
+        }
 
         // powerup block
         blockList.add(new QuestionBlock(8.0f/15*SuperMarioSurfaceView.WIDTH + 7*SuperMarioSurfaceView.BLOCKWIDTH, 3.0f/5*SuperMarioSurfaceView.GROUNDHEIGHT,1));

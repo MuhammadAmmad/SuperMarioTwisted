@@ -57,6 +57,7 @@ public class Player implements TimeConscious
     public void tick(Canvas c)
     {
         int col = -1;
+        int cols;
         int eColi = -1;
 
 
@@ -143,6 +144,25 @@ public class Player implements TimeConscious
                             falling = false;
                             onTopOfBlock = true;
 
+                            for(Block a: l.blockList) {
+                                cols = collisionSide(a.getX(), a.getY());
+
+                                if (cols != -1) {
+
+                                    switch (cols) {
+                                        case 3:
+                                            movingRight = false;
+                                            onLeftOfBlock = true;
+                                            break;
+                                        case 1:
+                                            //This should never happen
+                                            //movingLeft = false;
+                                            //onRightOfBlock = true;
+                                            break;
+
+                                    }
+                                }
+                            }
 
                         }
                         break loop1;
@@ -417,6 +437,31 @@ public class Player implements TimeConscious
         }
 
 
+    }
+
+    public int collisionSide(float x1, float y1) {
+
+        float padding = 30.0f;
+
+        Rect left1 = new Rect((int) (x1 - (padding)), (int) (y1 - padding), (int) (x1 + padding), (int) (y1 + SuperMarioSurfaceView.BLOCKWIDTH));
+        Rect right1 = new Rect((int) (x1 + SuperMarioSurfaceView.BLOCKWIDTH), (int) (y1 + 10), (int) (x + SuperMarioSurfaceView.BLOCKWIDTH + padding), (int) (y1 + SuperMarioSurfaceView.BLOCKWIDTH - 10));
+
+        if (left1.contains((int) (x + SuperMarioSurfaceView.BLOCKWIDTH), (int) (y + SuperMarioSurfaceView.BLOCKWIDTH / 2)))
+        {
+            Log.d(SuperMarioSurfaceView.TAG, "Collided with left");
+
+            return 3;
+        }
+        else if (right1.contains((int) (x), (int) (y)))
+        {
+            Log.d(SuperMarioSurfaceView.TAG, "Collided with right");
+
+            return 1;
+        }
+        else
+        {
+            return -1;
+        }
     }
 
     public int getSize()

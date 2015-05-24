@@ -52,6 +52,7 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
     private Bitmap mario;
     private Bitmap breakableblock;
     private Bitmap goomba;
+    private Bitmap koopa;
     private Bitmap goldmario;
     private Bitmap L1;
     private Bitmap L2;
@@ -114,6 +115,7 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
         breakableblock = BitmapFactory.decodeResource(getResources(), R.drawable.breakableblock, options);
         ground = BitmapFactory.decodeResource(getResources(), R.drawable.ground, options);
         goomba = BitmapFactory.decodeResource(getResources(), R.drawable.goomba, options);
+        koopa = BitmapFactory.decodeResource(getResources(), R.drawable.koopa, options);
         questionblock = BitmapFactory.decodeResource(getResources(), R.drawable.questionblock, options);
         flag = BitmapFactory.decodeResource(getResources(), R.drawable.flag, options);
         leftarrow = BitmapFactory.decodeResource(getResources(), R.drawable.leftarrow, options);
@@ -223,8 +225,14 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
                     // c.drawBitmap(groundblock, null, dst, paint);
                     dst.set((int) e.getX(), (int) e.getY(), (int) (e.getX() + BLOCKWIDTH), (int) (e.getY() + BLOCKWIDTH));
                     // dst.set(200,200, 400, 400);
-                    c.drawBitmap(goomba, null, dst, paint);
-                    // }
+                    if (e.getType() == 1)
+                    {
+                        c.drawBitmap(goomba, null, dst, paint);
+                    }
+                    else if (e.getType() == 2)
+                    {
+                        c.drawBitmap(koopa, null, dst, paint);
+                    }                    // }
                 }
 
                 for (Ground g : level1.groundList)
@@ -329,8 +337,14 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
                     // c.drawBitmap(groundblock, null, dst, paint);
                     dst.set((int) e.getX(), (int) e.getY(), (int) (e.getX() + BLOCKWIDTH), (int) (e.getY() + BLOCKWIDTH));
                     // dst.set(200,200, 400, 400);
-                    c.drawBitmap(goomba, null, dst, paint);
-                    // }
+                    if (e.getType() == 1)
+                    {
+                        c.drawBitmap(goomba, null, dst, paint);
+                    }
+                    else if (e.getType() == 2)
+                    {
+                        c.drawBitmap(koopa, null, dst, paint);
+                    }                    // }
                 }
 
                 for (Ground g : level2.groundList)
@@ -435,8 +449,15 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
                     // c.drawBitmap(groundblock, null, dst, paint);
                     dst.set((int) e.getX(), (int) e.getY(), (int) (e.getX() + BLOCKWIDTH), (int) (e.getY() + BLOCKWIDTH));
                     // dst.set(200,200, 400, 400);
-                    c.drawBitmap(goomba, null, dst, paint);
-                    // }
+                    if (e.getType() == 1)
+                    {
+                        c.drawBitmap(goomba, null, dst, paint);
+                    }
+                    else if (e.getType() == 2)
+                    {
+                        c.drawBitmap(koopa, null, dst, paint);
+                    }
+
                 }
 
                 for (Ground g : level3.groundList)
@@ -583,9 +604,9 @@ public class SuperMarioSurfaceView extends SurfaceView implements SurfaceHolder.
         else if(e.getPointerCount() > 1)
         {
             if(e.getPointerId(1) == pointerId1)
-            pointerId2 = e.getPointerId(0);
+                pointerId2 = e.getPointerId(0);
             else
-            pointerId2 = e.getPointerId(1);
+                pointerId2 = e.getPointerId(1);
 
         }
 

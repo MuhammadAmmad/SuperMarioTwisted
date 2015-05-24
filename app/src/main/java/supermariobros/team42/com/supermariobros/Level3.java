@@ -80,9 +80,9 @@ public class Level3 extends Level {
         }
         for (int i = 0; i<4; i++)
         {
-            enemyList.add(new Enemy(1, 3*SuperMarioSurfaceView.WIDTH + i * 3 * SuperMarioSurfaceView.BLOCKWIDTH + 9.0f * SuperMarioSurfaceView.BLOCKWIDTH, SuperMarioSurfaceView.GROUNDHEIGHT - SuperMarioSurfaceView.BLOCKWIDTH));
+            enemyList.add(new Enemy(2, 3*SuperMarioSurfaceView.WIDTH + i * 3 * SuperMarioSurfaceView.BLOCKWIDTH + 9.0f * SuperMarioSurfaceView.BLOCKWIDTH, SuperMarioSurfaceView.GROUNDHEIGHT - SuperMarioSurfaceView.BLOCKWIDTH));
         }
-        enemyList.add(new Enemy(1, 2*SuperMarioSurfaceView.WIDTH + 12.0f * SuperMarioSurfaceView.BLOCKWIDTH, 3.0f/5*SuperMarioSurfaceView.GROUNDHEIGHT - SuperMarioSurfaceView.BLOCKWIDTH));
+        enemyList.add(new Enemy(2, 2*SuperMarioSurfaceView.WIDTH + 12.0f * SuperMarioSurfaceView.BLOCKWIDTH, 3.0f/5*SuperMarioSurfaceView.GROUNDHEIGHT - SuperMarioSurfaceView.BLOCKWIDTH));
 
 
         // draw flag
